@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>サイトマップ / コンテンツ一覧｜はぎのりな Official Fan Site</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    /* Sitemap-only styles */
+    body { background: var(--color-bg); }
+
+    .sm-shell {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 120px var(--container-x) 80px;
+      position: relative;
+    }
+
+    .sm-head {
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+      padding-bottom: 32px; margin-bottom: 48px;
+      border-bottom: 2px dotted rgba(230,57,70,0.3);
+      flex-wrap: wrap;
+    }
+    .sm-head h1 {
+      font-family: var(--font-en); font-size: clamp(40px, 5vw, 64px);
+      color: var(--color-red); line-height: 1.1;
+    }
+    .sm-head h1 .jp {
+      display: block; font-family: var(--font-jp); font-size: 14px;
+      color: var(--color-text-sub); letter-spacing: 0.18em;
+      margin-bottom: 10px;
+    }
+    .sm-head .meta {
+      font-family: var(--font-en); font-size: 12px;
+      color: var(--color-text-sub); letter-spacing: 0.12em;
+      max-width: 380px; line-height: 1.9;
+    }
+
+    .legend {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      padding: 16px 20px;
+      background: #fff; border-radius: var(--radius-md);
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 56px;
+    }
+    .legend .pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.06em;
+    }
+    .legend .pill .sw {
+      width: 12px; height: 12px; border-radius: 4px;
+    }
+    .sw.t { background: #cfd8e3; }
+    .sw.i { background: #ffd1c9; }
+    .sw.l { background: #ffe9a3; }
+    .sw.c { background: #c7e8d3; }
+    .sw.f { background: #d9c8f0; }
+
+    /* Page card grid */
+    .pages {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .page-block {
+      background: #fff;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      position: relative;
+    }
+    .page-block::before {
+      content: "";
+      position: absolute; top: -40px; right: -40px;
+      width: 160px; height: 160px; border-radius: 50%;
+      background: var(--color-yellow-soft);
+      z-index: 0;
+      opacity: .8;
+    }
+
+    .page-head {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      gap: 24px; align-items: center;
+      padding: 28px 36px;
+      border-bottom: 1.5px solid var(--color-border);
+      background: linear-gradient(180deg, #fffdf6 0%, #fff 100%);
+    }
+    .page-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--color-red); color: #fff;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: var(--font-en); font-size: 22px; font-weight: 700;
+      box-shadow: 0 8px 22px rgba(230,57,70,.25);
+    }
+    .page-title { display: flex; flex-direction: column; gap: 4px; }
+    .page-title .file {
+      font-family: var(--font-en); font-size: 12px;
+      color: var(--color-text-sub); letter-spacing: 0.1em;
+    }
+    .page-title h2 {
+      font-family: var(--font-jp); font-size: 26px;
+      color: var(--color-text);
+    }
+    .page-title h2 .en {
+      font-family: var(--font-en); font-size: 15px;
+      color: var(--color-red); margin-left: 10px; font-weight: 700;
+    }
+    .page-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px; background: var(--color-yellow);
+      border-radius: var(--radius-pill);
+      font-size: 13px; font-weight: 700; color: var(--color-text);
+      transition: transform .25s ease, box-shadow .25s ease;
+      box-shadow: 0 6px 16px rgba(244,211,94,.4);
+    }
+    .page-link:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(244,211,94,.55); }
+
+    /* Section list inside each page */
+    .sections {
+      position: relative; z-index: 1;
+      padding: 8px 0 12px;
+    }
+    .section-row {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 28px;
+      padding: 22px 36px;
+      border-bottom: 1px dashed var(--color-border);
+      align-items: flex-start;
+    }
+    .section-row:last-child { border-bottom: 0; }
+
+    .sec-name {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--color-text);
+    }
+    .sec-name .idx {
+      display: inline-block;
+      font-family: var(--font-en);
+      font-size: 11px;
+      color: var(--color-text-sub);
+      letter-spacing: 0.14em;
+      margin-bottom: 6px;
+    }
+    .sec-name .anchor {
+      display: block;
+      font-family: var(--font-en);
+      font-size: 11px;
+      color: var(--color-red);
+      letter-spacing: 0.08em;
+      margin-top: 6px;
+      opacity: .8;
+    }
+
+    .fields { display: flex; flex-direction: column; gap: 10px; }
+    .field-row {
+      display: grid;
+      grid-template-columns: 84px 1fr;
+      gap: 16px;
+      align-items: baseline;
+      font-size: 14px;
+    }
+    .field-tag {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      width: 72px;
+    }
+    .field-tag.t { background: #e6edf5; color: #3a5a82; }
+    .field-tag.i { background: #ffd1c9; color: #a03a2e; }
+    .field-tag.l { background: #ffe9a3; color: #8a6510; }
+    .field-tag.c { background: #c7e8d3; color: #2e6b48; }
+    .field-tag.f { background: #d9c8f0; color: #553a8b; }
+
+    .field-content { color: var(--color-text-sub); line-height: 1.8; }
+    .field-content .ph {
+      display: inline-block;
+      padding: 1px 8px;
+      background: #f5f1e8;
+      border-radius: 4px;
+      color: var(--color-text);
+      font-size: 13px;
+      margin: 2px 0;
+    }
+    .field-content .need {
+      color: var(--color-red);
+      font-size: 11px;
+      font-weight: 700;
+      margin-left: 6px;
+      letter-spacing: 0.06em;
+    }
+    .field-content ul { margin: 4px 0; padding-left: 18px; }
+    .field-content li { margin-bottom: 4px; }
+
+    /* Top navigation back home */
+    .back-home {
+      position: fixed;
+      top: 22px; left: 22px;
+      z-index: 100;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 18px;
+      background: #fff; border-radius: var(--radius-pill);
+      font-size: 12px; font-weight: 700;
+      box-shadow: var(--shadow-soft);
+      letter-spacing: 0.08em;
+    }
+    .back-home:hover { background: var(--color-yellow); }
+
+    /* Site tree at the top */
+    .sitetree {
+      padding: 28px 32px;
+      background: #fff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 48px;
+      font-family: var(--font-en);
+    }
+    .sitetree h3 {
+      font-size: 13px; letter-spacing: 0.18em;
+      color: var(--color-text-sub); margin-bottom: 18px;
+      font-family: var(--font-en);
+    }
+    .tree ul { list-style: none; padding: 0; margin: 0; }
+    .tree > ul > li { margin-bottom: 8px; }
+    .tree li { position: relative; padding-left: 22px; line-height: 2; }
+    .tree li::before {
+      content: ""; position: absolute; left: 4px; top: 14px;
+      width: 12px; height: 1px; background: var(--color-border);
+    }
+    .tree > ul > li::before { display: none; }
+    .tree > ul > li > a {
+      font-size: 16px; font-weight: 700; color: var(--color-red);
+    }
+    .tree li ul { padding-left: 8px; }
+    .tree li li a { font-size: 13px; color: var(--color-text); }
+    .tree li li li a { color: var(--color-text-sub); font-size: 12px; }
+    .tree a:hover { text-decoration: underline; }
+
+    @media (max-width: 767px) {
+      .sm-shell { padding-top: 90px; }
+      .page-head { grid-template-columns: 48px 1fr; padding: 20px; }
+      .page-link { grid-column: 1 / -1; width: fit-content; margin-top: 12px; }
+      .section-row { grid-template-columns: 1fr; padding: 20px; gap: 16px; }
+      .field-row { grid-template-columns: 80px 1fr; gap: 12px; }
+    }
+  </style>
+</head>
+<body data-screen-label="Sitemap">
+
+<a class="back-home" href="index.html">← サイトへ戻る</a>
+
+<main class="sm-shell">
+
+  <header class="sm-head">
+    <h1>
+      <span class="jp">SITEMAP &amp; CONTENT — 制作物一覧</span>
+      Sitemap &amp; Content Inventory.
+    </h1>
+    <p class="meta">
+      公式ファンサイトのページ構成と、各ページに配置されている要素・テキスト・素材の一覧です。<br>
+      実情報の差し替えを行う際のチェックリストとしてご使用ください。
+    </p>
+  </header>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <span class="pill"><span class="sw t"></span>TEXT / コピー</span>
+    <span class="pill"><span class="sw i"></span>IMAGE / 画像</span>
+    <span class="pill"><span class="sw l"></span>LIST / リスト</span>
+    <span class="pill"><span class="sw c"></span>CTA / リンク</span>
+    <span class="pill"><span class="sw f"></span>FORM / フォーム</span>
+  </div>
+
+  <!-- SITE TREE -->
+  <div class="sitetree">
+    <h3>SITE STRUCTURE</h3>
+    <div class="tree">
+      <ul>
+        <li>
+          <a href="index.html">/ index.html — トップページ</a>
+          <ul>
+            <li>Header / Navigation</li>
+            <li>Hero / First View</li>
+            <li>Concept</li>
+            <li>Works (活動紹介)</li>
+            <li>Profile</li>
+            <li>News Preview</li>
+            <li>Gallery Preview</li>
+            <li>Contact Preview</li>
+            <li>Footer</li>
+          </ul>
+        </li>
+        <li>
+          <a href="works.html">/ works.html — 活動紹介</a>
+          <ul><li>Page Hero</li><li>Works Detail (4 categories)</li><li>CTA Band</li></ul>
+        </li>
+        <li>
+          <a href="gallery.html">/ gallery.html — Photo / Gallery</a>
+          <ul><li>Page Hero</li><li>Filter</li><li>Gallery Grid (16 items)</li><li>More CTA</li></ul>
+        </li>
+        <li>
+          <a href="news.html">/ news.html — News / Info</a>
+          <ul><li>Page Hero</li><li>Upcoming Schedule (3)</li><li>All News List (8)</li></ul>
+        </li>
+        <li>
+          <a href="contact.html">/ contact.html — Contact &amp; SNS</a>
+          <ul><li>Page Hero</li><li>Request Types (6)</li><li>Contact Form</li><li>SNS Links</li></ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PAGE BLOCKS -->
+  <div class="pages">
+
+    <!-- ========== 01 INDEX ========== -->
+    <article class="page-block">
+      <div class="page-head">
+        <span class="page-num">01</span>
+        <div class="page-title">
+          <span class="file">/ index.html</span>
+          <h2>トップページ<span class="en">Top / Home</span></h2>
+        </div>
+        <a class="page-link" href="index.html">ページを開く →</a>
+      </div>
+
+      <div class="sections">
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 01</span>Header / Navigation<span class="anchor">.site-header</span></div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag t">TEXT</span><div class="field-content"><span class="ph">Haginorina</span> / <span class="ph">Official Fan Site</span></div></div>
+            <div class="field-row"><span class="field-tag i">IMAGE</span><div class="field-content">チューリップアイコン（ロゴ脇）<span class="need">REPLACE</span></div></div>
+            <div class="field-row"><span class="field-tag c">NAV</span><div class="field-content">活動紹介 / Photo / Gallery / News / Info / Contact &amp; SNS</div></div>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 02</span>Hero / First View<span class="anchor">.hero</span></div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag t">EYEBROW</span><div class="field-content"><span class="ph">フリーの役者 / たまにモデル</span></div></div>
+            <div class="field-row"><span class="field-tag t">H1</span><div class="field-content"><span class="ph">はぎのりな</span></div></div>
+            <div class="field-row"><span class="field-tag t">LEAD</span><div class="field-content"><span class="ph">表現することが大好きです。舞台や映像、いろんな場所で皆さんと出会えますように。</span><span class="need">CONFIRM</span></div></div>
+            <div class="field-row"><span class="field-tag c">CTA</span><div class="field-content">「最新情報をチェック」→ news.html</div></div>
+            <div class="field-row"><span class="field-tag i">IMAGE</span><div class="field-content">メインビジュアル × 3枚（hero-main-01〜03.jpg）<span class="need">REPLACE</span></div></div>
+            <div class="field-row"><span class="field-tag t">BADGE</span><div class="field-content">Thank you / for always supporting me!</div></div>
+            <div class="field-row"><span class="field-tag c">SNS</span><div class="field-content">X / Instagram / YouTube リンク<span class="need">URL必要</span></div></div>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 03</span>Concept<span class="anchor">[data-section="about"]</span></div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag t">H2</span><div class="field-content"><span class="ph">Feel the Boundary, Transform the Ordinary.</span></div></div>
+            <div class="field-row"><span class="field-tag t">LEAD</span><div class="field-content"><span class="ph">境界を感じて、日常を変えていく。日常と非日常のあいだに立つ存在として…</span><span class="need">CONFIRM</span></div></div>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 04</span>Works (活動紹介)<span class="anchor">#works</span></div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag t">H2</span><div class="field-content">Works.</div></div>
+            <div class="field-row"><span class="field-tag l">CARDS × 4</span><div class="field-content">
+              <ul>
+                <li>01 舞台 / Stage — 説明文<span class="need">DETAIL</span></li>
+                <li>02 映像 / Film — 説明文<span class="need">DETAIL</span></li>
+                <li>03 モデル / Model — 説明文<span class="need">DETAIL</span></li>
+                <li>04 執筆・詩 / Writing — 説明文<span class="need">DETAIL</span></li>
+              </ul>
+            </div></div>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 05</span>Profile<span class="anchor">[data-section="profile"]</span></div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag i">IMAGE</span><div class="field-content">プロフィール写真（4:5縦長）<span class="need">REPLACE</span></div></div>
+            <div class="field-row"><span class="field-tag l">DL</span><div class="field-content">
+              <ul>
+                <li>Name — はぎのりな / Haginorina</li>
+                <li>Activity — フリーの役者 / たまにモデル</li>
+                <li>Field — 舞台 / 映像 / モデル / 執筆・詩</li>
+                <li>Status — 出演・撮影・寄稿 受付中</li>
+              </ul>
+              <span class="need">生年月日・出身地・身長などを追加するか要確認</span>
+            </div></div>
+            <div class="field-row"><span class="field-tag t">BIO</span><div class="field-content"><span class="ph">表現することが大好きです。舞台や映像、撮影、執筆──…</span><span class="need">CONFIRM</span></div></div>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 06</span>News Preview<span class="anchor">[data-section="news"]</span></div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag l">ITEMS × 4</span><div class="field-content">
+              <ul>
+                <li>2026.05.10 [舞台] 劇団○○ 春公演『境界線のむこう』に出演します<span class="need">DUMMY</span></li>
+                <li>2026.04.28 [撮影] スプリングルックブック撮影の写真を公開しました<span class="need">DUMMY</span></li>
+                <li>2026.04.14 [執筆] エッセイ「日常と非日常のあいだ」を寄稿しました<span class="need">DUMMY</span></li>
+                <li>2026.03.30 [映像] 短編映画『tulip』参加のお知らせ<span class="need">DUMMY</span></li>
+              </ul>
+            </div></div>
+            <div class="field-row"><span class="field-tag c">CTA</span><div class="field-content">ALL NEWS → news.html</div></div>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 07</span>Gallery Preview<span class="anchor">[data-section="gallery"]</span></div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag i">IMAGES × 8</span><div class="field-content">プレースホルダー：MAIN VISUAL / 2026 SPRING / STAGE / FILM / LOOKBOOK / OFFSHOT / STUDIO / STAGE 02<span class="need">REPLACE</span></div></div>
+            <div class="field-row"><span class="field-tag c">CTA</span><div class="field-content">VIEW ALL → gallery.html</div></div>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 08</span>Contact Preview<span class="anchor">[data-section="contact"]</span></div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag t">H3</span><div class="field-content">お仕事のご依頼</div></div>
+            <div class="field-row"><span class="field-tag t">DESC</span><div class="field-content"><span class="ph">舞台・映像・撮影・寄稿・コラボなど、表現に関わるご相談はフォームよりお気軽に…</span></div></div>
+            <div class="field-row"><span class="field-tag c">CTA</span><div class="field-content">フォームを開く → contact.html</div></div>
+            <div class="field-row"><span class="field-tag c">SNS × 3</span><div class="field-content">X / Instagram / YouTube アカウントカード<span class="need">URL必要</span></div></div>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 09</span>Footer<span class="anchor">.site-footer</span></div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag t">TAGLINE</span><div class="field-content"><span class="ph">表現することが大好きな、フリーの役者 / たまにモデル。境界を感じて、日常を変えていく。</span></div></div>
+            <div class="field-row"><span class="field-tag l">LINKS</span><div class="field-content">SITE MAP / WORKS / FOLLOW の3列ナビゲーション</div></div>
+            <div class="field-row"><span class="field-tag t">COPYRIGHT</span><div class="field-content">© 2026 Haginorina. All Rights Reserved.</div></div>
+          </div>
+        </div>
+
+      </div>
+    </article>
+
+    <!-- ========== 02 WORKS ========== -->
+    <article class="page-block">
+      <div class="page-head">
+        <span class="page-num">02</span>
+        <div class="page-title">
+          <span class="file">/ works.html</span>
+          <h2>活動紹介<span class="en">Works</span></h2>
+        </div>
+        <a class="page-link" href="works.html">ページを開く →</a>
+      </div>
+      <div class="sections">
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 01</span>Page Hero</div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag t">H1</span><div class="field-content">Works.</div></div>
+            <div class="field-row"><span class="field-tag t">LEAD</span><div class="field-content"><span class="ph">舞台・映像・モデル・執筆。ジャンルの境界をやわらかく行き来しながら…</span><span class="need">CONFIRM</span></div></div>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 02</span>Works Detail<br>(4 cards)</div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag l">01 STAGE</span><div class="field-content">
+              タイトル「舞台」/ Theater / Stage Acting<br>
+              本文<span class="need">DETAIL</span><br>
+              実績リスト：<ul>
+                <li>劇団○○ 春公演『境界線のむこう』<span class="need">DUMMY</span></li>
+                <li>朗読会『tulip night』ゲスト出演<span class="need">DUMMY</span></li>
+                <li>短編演劇祭 客演<span class="need">DUMMY</span></li>
+              </ul>
+            </div></div>
+            <div class="field-row"><span class="field-tag l">02 FILM</span><div class="field-content">
+              タイトル「映像」/ Film / Video / Drama<br>
+              本文<span class="need">DETAIL</span><br>
+              実績リスト：<ul>
+                <li>短編映画『tulip』主演<span class="need">DUMMY</span></li>
+                <li>Webドラマシリーズ ゲスト出演<span class="need">DUMMY</span></li>
+                <li>ミュージックビデオ複数出演<span class="need">DUMMY</span></li>
+              </ul>
+            </div></div>
+            <div class="field-row"><span class="field-tag l">03 MODEL</span><div class="field-content">
+              タイトル「モデル」/ Model / Photoshoot<br>
+              本文<span class="need">DETAIL</span><br>
+              実績リスト：<ul>
+                <li>2026 SPRING ルックブック<span class="need">DUMMY</span></li>
+                <li>ブランドビジュアル撮影<span class="need">DUMMY</span></li>
+                <li>雑誌コラボ撮影<span class="need">DUMMY</span></li>
+              </ul>
+            </div></div>
+            <div class="field-row"><span class="field-tag l">04 WRITING</span><div class="field-content">
+              タイトル「執筆・詩・コラム」/ Writing / Poem / Column<br>
+              本文<span class="need">DETAIL</span><br>
+              実績リスト：<ul>
+                <li>エッセイ「日常と非日常のあいだ」<span class="need">DUMMY</span></li>
+                <li>連載コラム『境界の散歩』<span class="need">DUMMY</span></li>
+                <li>詩集 寄稿<span class="need">DUMMY</span></li>
+              </ul>
+            </div></div>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 03</span>CTA Band</div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag t">H2</span><div class="field-content">Let's create together.</div></div>
+            <div class="field-row"><span class="field-tag c">CTA</span><div class="field-content">お問い合わせはこちら → contact.html</div></div>
+          </div>
+        </div>
+
+      </div>
+    </article>
+
+    <!-- ========== 03 GALLERY ========== -->
+    <article class="page-block">
+      <div class="page-head">
+        <span class="page-num">03</span>
+        <div class="page-title">
+          <span class="file">/ gallery.html</span>
+          <h2>Photo / Gallery<span class="en">Gallery</span></h2>
+        </div>
+        <a class="page-link" href="gallery.html">ページを開く →</a>
+      </div>
+      <div class="sections">
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 01</span>Page Hero</div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag t">H1</span><div class="field-content">Gallery.</div></div>
+            <div class="field-row"><span class="field-tag t">LEAD</span><div class="field-content"><span class="ph">舞台・撮影・オフショットなど、これまでの瞬間たち。</span></div></div>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 02</span>Filter</div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag l">TAGS</span><div class="field-content">ALL / STAGE / FILM / MODEL / OFFSHOT<span class="need">CATEGORY確認</span></div></div>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 03</span>Gallery Grid<br>(16 items)</div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag i">IMAGES</span><div class="field-content">
+              プレースホルダーラベル：MAIN VISUAL / 2026 SPRING / STAGE 01 / FILM 01 / LOOKBOOK / OFFSHOT 01 / STUDIO / STAGE 02 / PORTRAIT / CAMPAIGN / BEHIND / COVER / STAGE 03 / OFFSHOT 02 / MV / PORTRAIT 02<span class="need">REPLACE すべて</span>
+            </div></div>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 04</span>More CTA</div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag c">CTA</span><div class="field-content">MORE PHOTOS（ページネーション or ロード）<span class="need">仕様確認</span></div></div>
+          </div>
+        </div>
+
+      </div>
+    </article>
+
+    <!-- ========== 04 NEWS ========== -->
+    <article class="page-block">
+      <div class="page-head">
+        <span class="page-num">04</span>
+        <div class="page-title">
+          <span class="file">/ news.html</span>
+          <h2>News / Info<span class="en">News</span></h2>
+        </div>
+        <a class="page-link" href="news.html">ページを開く →</a>
+      </div>
+      <div class="sections">
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 01</span>Page Hero</div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag t">H1</span><div class="field-content">News.</div></div>
+            <div class="field-row"><span class="field-tag t">LEAD</span><div class="field-content"><span class="ph">公演予定・出演情報・寄稿のお知らせ。</span></div></div>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 02</span>Upcoming Schedule<br>(3 cards)</div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag l">EVENTS</span><div class="field-content">
+              <ul>
+                <li>2026.05.18-22 劇団○○ 春公演『境界線のむこう』<span class="need">DUMMY</span></li>
+                <li>2026.06.04 朗読会『tulip night』<span class="need">DUMMY</span></li>
+                <li>2026.07.12 短編映画『tulip』先行上映会<span class="need">DUMMY</span></li>
+              </ul>
+            </div></div>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 03</span>All News<br>(8 items)</div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag l">NEWS</span><div class="field-content">
+              <ul>
+                <li>2026.05.10 [舞台] 春公演出演<span class="need">DUMMY</span></li>
+                <li>2026.04.28 [撮影] ルックブック公開<span class="need">DUMMY</span></li>
+                <li>2026.04.14 [執筆] エッセイ寄稿<span class="need">DUMMY</span></li>
+                <li>2026.03.30 [映像] 短編映画参加<span class="need">DUMMY</span></li>
+                <li>2026.03.15 [撮影] コラボ撮影<span class="need">DUMMY</span></li>
+                <li>2026.02.20 [執筆] 連載コラム第2回<span class="need">DUMMY</span></li>
+                <li>2026.02.02 [舞台] 朗読イベント客演<span class="need">DUMMY</span></li>
+                <li>2026.01.10 [お知らせ] サイト公開<span class="need">DUMMY</span></li>
+              </ul>
+            </div></div>
+          </div>
+        </div>
+
+      </div>
+    </article>
+
+    <!-- ========== 05 CONTACT ========== -->
+    <article class="page-block">
+      <div class="page-head">
+        <span class="page-num">05</span>
+        <div class="page-title">
+          <span class="file">/ contact.html</span>
+          <h2>Contact &amp; SNS<span class="en">Contact</span></h2>
+        </div>
+        <a class="page-link" href="contact.html">ページを開く →</a>
+      </div>
+      <div class="sections">
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 01</span>Page Hero</div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag t">H1</span><div class="field-content">Get in touch.</div></div>
+            <div class="field-row"><span class="field-tag t">LEAD</span><div class="field-content"><span class="ph">お仕事のご依頼・取材・コラボなど、お気軽にご連絡ください。</span></div></div>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 02</span>Request Types<br>(6 items)</div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag l">TYPES</span><div class="field-content">
+              <ul>
+                <li>01 舞台・朗読 出演</li>
+                <li>02 映像・短編映画・MV 出演</li>
+                <li>03 モデル・撮影・ルックブック</li>
+                <li>04 執筆・コラム・詩 寄稿</li>
+                <li>05 イベント・トーク 出演</li>
+                <li>06 その他コラボのご相談</li>
+              </ul>
+              <span class="need">受付内容を確認</span>
+            </div></div>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 03</span>Contact Form</div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag f">FIELDS</span><div class="field-content">
+              <ul>
+                <li>お名前（必須）</li>
+                <li>メールアドレス（必須）</li>
+                <li>ご依頼内容（select：6種）</li>
+                <li>メッセージ（必須）</li>
+              </ul>
+            </div></div>
+            <div class="field-row"><span class="field-tag f">SUBMIT</span><div class="field-content">「送信する」ボタン → 送信先<span class="need">URL / メール宛先 確認</span></div></div>
+          </div>
+        </div>
+
+        <div class="section-row">
+          <div class="sec-name"><span class="idx">SECTION 04</span>SNS Links</div>
+          <div class="fields">
+            <div class="field-row"><span class="field-tag c">X</span><div class="field-content">@haginorina<span class="need">実アカウント</span></div></div>
+            <div class="field-row"><span class="field-tag c">Instagram</span><div class="field-content">@haginorina<span class="need">実アカウント</span></div></div>
+            <div class="field-row"><span class="field-tag c">YouTube</span><div class="field-content">@haginorina<span class="need">実アカウント</span></div></div>
+          </div>
+        </div>
+
+      </div>
+    </article>
+
+  </div>
+
+  <!-- SUMMARY of items needing real data -->
+  <section style="margin-top:64px;padding:36px 40px;background:#fff;border-radius:var(--radius-xl);box-shadow:var(--shadow-soft);">
+    <h3 style="font-family:var(--font-en);font-size:18px;color:var(--color-red);letter-spacing:0.08em;margin-bottom:18px;">
+      ☑ NEEDS REAL DATA — リサーチ・差し替え一覧
+    </h3>
+    <ol style="padding-left:22px;line-height:2.1;color:var(--color-text);font-size:14px;">
+      <li><strong>プロフィール情報</strong>：生年月日 / 出身地 / 身長 / 所属（フリー）/ 趣味・特技 など</li>
+      <li><strong>SNS実アカウント URL</strong>：X / Instagram / YouTube</li>
+      <li><strong>本人による紹介文・自己紹介</strong>（リード文・Bio）</li>
+      <li><strong>活動実績</strong>：舞台・映像・モデル・執筆の実際の出演・参加作品リスト</li>
+      <li><strong>FV メインビジュアル写真</strong>（3枚 推奨）</li>
+      <li><strong>プロフィール写真</strong>（4:5 縦長）</li>
+      <li><strong>ギャラリー写真</strong>（16枚 ＋ 追加）</li>
+      <li><strong>News 記事</strong>：実際の公演予定・お知らせ</li>
+      <li><strong>お問い合わせフォームの送信先</strong>（メール or プラグイン）</li>
+      <li><strong>受付可能な依頼カテゴリ</strong>の確認</li>
+    </ol>
+  </section>
+
+</main>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

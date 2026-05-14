@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact &amp; SNS｜はぎのりな Official Fan Site</title>
+  <meta name="description" content="はぎのりな様 公式ファンサイト。お問い合わせフォーム・SNSリンク・依頼内容について。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Baloo+2:wght@500;600;700;800&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    .contact-form { display: grid; gap: 20px; }
+    .field { display: grid; gap: 8px; }
+    .field label { font-weight: 700; font-size: 13px; letter-spacing: 0.06em; color: var(--color-text); }
+    .field label .req { color: var(--color-red); margin-left: 6px; font-size: 11px; }
+    .field input, .field select, .field textarea {
+      font-family: inherit; font-size: 15px;
+      padding: 16px 20px;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: #fff;
+      transition: border-color .2s ease, box-shadow .2s ease;
+      width: 100%;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: none;
+      border-color: var(--color-red);
+      box-shadow: 0 0 0 4px rgba(230,57,70,0.10);
+    }
+    .field textarea { resize: vertical; min-height: 140px; }
+    .submit-row { display: flex; justify-content: center; margin-top: 12px; }
+    .request-list {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+      margin-top: 28px;
+    }
+    .request-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 18px 20px;
+      background: var(--color-yellow-soft);
+      border-radius: var(--radius-lg);
+      font-weight: 700; font-size: 14px;
+    }
+    .request-item .num {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--color-red); color: #fff;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: var(--font-en); font-size: 13px;
+    }
+    @media (max-width: 767px) {
+      .request-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body data-screen-label="Contact">
+
+<header class="site-header">
+  <a class="logo" href="index.html"><div>
+    <span class="logo-mark">Haginorina <img class="tulip" src="assets/icons/tulip.png" alt="" aria-hidden="true"></span>
+    <span class="logo-sub">Official Fan Site</span>
+  </div></a>
+  <nav class="main-nav">
+    <a class="nav-pill" href="works.html">活動紹介</a>
+    <a class="nav-pill" href="gallery.html">Photo / Gallery</a>
+    <a class="nav-pill" href="news.html">News / Info</a>
+    <a class="nav-pill is-active" href="contact.html" aria-current="page">Contact &amp; SNS</a>
+  </nav>
+  <button class="nav-toggle" aria-label="メニュー" aria-controls="mobileNav"><span></span></button>
+</header>
+<aside id="mobileNav" class="mobile-nav">
+  <a href="works.html">活動紹介 <span class="arrow">→</span></a>
+  <a href="gallery.html">Photo / Gallery <span class="arrow">→</span></a>
+  <a href="news.html">News / Info <span class="arrow">→</span></a>
+  <a href="contact.html">Contact &amp; SNS <span class="arrow">→</span></a>
+</aside>
+
+<section class="page-hero">
+  <span class="deco deco-circle float-soft" aria-hidden="true" style="position:absolute;top:80px;right:-80px;width:240px;height:240px;background:var(--color-yellow-soft);"></span>
+  <span class="deco deco-circle float-medium" aria-hidden="true" style="position:absolute;top:200px;left:6%;width:60px;height:60px;background:var(--color-red);opacity:.2;"></span>
+  <span class="deco deco-stripe float-soft" aria-hidden="true" style="position:absolute;bottom:50px;right:20%;width:120px;height:120px;transform:rotate(-12deg);opacity:.5;"></span>
+
+  <div class="page-hero-inner">
+    <div class="page-hero-text">
+      <div class="breadcrumb"><a href="index.html">HOME</a> &nbsp;/&nbsp; CONTACT &amp; SNS</div>
+      <h1>
+        <span class="jp">CONTACT &amp; SNS — お問い合わせ</span>
+        Get in touch.
+      </h1>
+      <p>お仕事のご依頼・取材・コラボなど、お気軽にご連絡ください。<br>SNSはDMでもお受けしています。</p>
+    </div>
+    <div class="page-hero-photo">
+      <img src="assets/images/g09.jpg" alt="はぎのりな ポートレート" style="object-position: center 25%;" />
+    </div>
+  </div>
+</section>
+
+<!-- REQUEST TYPES -->
+<section class="section section-bg-soft" style="padding-bottom:60px;">
+  <div class="section-inner reveal">
+    <h2 class="section-title" style="font-size:36px;">
+      <span class="jp">お受けしている内容</span>
+      How can I help?
+    </h2>
+    <div class="request-list">
+      <div class="request-item"><span class="num">01</span>舞台・朗読 出演</div>
+      <div class="request-item"><span class="num">02</span>映像・短編映画・MV 出演</div>
+      <div class="request-item"><span class="num">03</span>モデル・撮影・ルックブック</div>
+      <div class="request-item"><span class="num">04</span>けん玉パフォーマンス</div>
+      <div class="request-item"><span class="num">05</span>イベント・トーク 出演</div>
+      <div class="request-item"><span class="num">06</span>その他コラボのご相談</div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM + SNS -->
+<section class="section section-bg-white" style="padding-top:40px;">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-card reveal">
+        <h3>お問い合わせフォーム</h3>
+        <p>必要事項をご入力のうえ、送信してください。<br>内容を確認のうえ、3〜7日以内にご返信いたします。</p>
+
+        <form class="contact-form" onsubmit="event.preventDefault(); this.querySelector('.submit-row').innerHTML='<div style=\'color:var(--color-red);font-weight:700;\'>送信ありがとうございました。</div>';">
+          <div class="field">
+            <label>お名前 <span class="req">必須</span></label>
+            <input type="text" required placeholder="山田 太郎" />
+          </div>
+          <div class="field">
+            <label>メールアドレス <span class="req">必須</span></label>
+            <input type="email" required placeholder="you@example.com" />
+          </div>
+          <div class="field">
+            <label>ご依頼内容</label>
+            <select>
+              <option>舞台・朗読 出演</option>
+              <option>映像・短編映画・MV 出演</option>
+              <option>モデル・撮影・ルックブック</option>
+              <option>けん玉パフォーマンス</option>
+              <option>イベント・トーク 出演</option>
+              <option>その他</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>メッセージ <span class="req">必須</span></label>
+            <textarea required placeholder="ご依頼の概要・スケジュール・媒体などをご記入ください。"></textarea>
+          </div>
+          <div class="submit-row">
+            <button type="submit" class="hero-cta" style="border:0;">
+              <span>送信する</span>
+              <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="sns-block reveal">
+        <h3 style="font-family:var(--font-en);color:var(--color-red);font-size:24px;margin-bottom:8px;">Follow me on SNS</h3>
+        <p style="color:var(--color-text-sub);margin-bottom:20px;line-height:2;">日常や活動の様子は、SNSで発信しています。<br>気軽にフォローしてください。</p>
+        <a class="sns-row" href="https://x.com/rinasa__n" target="_blank" rel="noopener">
+          <span class="icon-wrap x"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></span>
+          <span class="info"><span class="name">X (Twitter)</span><span class="handle">@rinasa__n</span></span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="sns-row" href="https://www.instagram.com/haginori02/" target="_blank" rel="noopener">
+          <span class="icon-wrap ig"><i class="fa-brands fa-instagram" aria-hidden="true"></i></span>
+          <span class="info"><span class="name">Instagram</span><span class="handle">@haginori02</span></span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="sns-row" href="#">
+          <span class="icon-wrap yt"><i class="fa-brands fa-youtube" aria-hidden="true"></i></span>
+          <span class="info"><span class="name">YouTube</span><span class="handle">準備中</span></span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo-mark">Haginorina <img class="tulip" src="assets/icons/tulip.png" alt="" style="width:24px;height:24px;transform:translateY(4px);"></span>
+      <span class="logo-sub">Official Fan Site</span>
+      <p>表現することが大好きな、フリーの役者 / たまにモデル。<br>境界を感じて、日常を変えていく。</p>
+    </div>
+    <div class="footer-col"><h4>SITE MAP</h4><ul>
+      <li><a href="works.html">活動紹介</a></li><li><a href="gallery.html">Photo / Gallery</a></li>
+      <li><a href="news.html">News / Info</a></li><li><a href="contact.html">Contact &amp; SNS</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>WORKS</h4><ul>
+      <li><a href="works.html">舞台</a></li><li><a href="works.html">映像</a></li>
+      <li><a href="works.html">モデル</a></li><li><a href="works.html">執筆・詩</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>FOLLOW</h4><ul>
+      <li><a href="https://x.com/rinasa__n" target="_blank" rel="noopener">X (Twitter)</a></li><li><a href="https://www.instagram.com/haginori02/" target="_blank" rel="noopener">Instagram</a></li><li><a href="#">YouTube</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Haginorina. All Rights Reserved.</span>
+    <span>Feel the Boundary, Transform the Ordinary.</span>
+  </div>
+</footer>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
