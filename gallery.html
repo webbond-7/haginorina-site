@@ -20,8 +20,31 @@
     .gallery-filter button.is-active { background: var(--color-red); color:#fff; }
     .gallery-filter button:hover { transform: translateY(-2px); }
   </style>
+
+  <script>
+  (function () {
+    try {
+      if (new URLSearchParams(location.search).has('loader')) {
+        sessionStorage.removeItem('h_loaded');
+        return;
+      }
+      if (sessionStorage.getItem('h_loaded')) document.documentElement.classList.add('no-loader');
+    } catch (e) {}
+  })();
+  </script>
 </head>
 <body data-screen-label="Gallery">
+<!-- SITE LOADER -->
+<div class="site-loader" id="siteLoader" aria-hidden="true">
+  <div class="buddy-wrap">
+    <img class="buddy" src="assets/icons/loader-buddy.png" alt="" />
+    <div class="buddy-shadow"></div>
+  </div>
+  <div class="label" aria-label="Now Loading">
+    <span>N</span><span>o</span><span>w</span><span>&nbsp;</span><span>L</span><span>o</span><span>a</span><span>d</span><span>i</span><span>n</span><span>g</span><span>.</span><span>.</span><span>.</span>
+  </div>
+</div>
+
 
 <header class="site-header">
   <a class="logo" href="index.html"><div>

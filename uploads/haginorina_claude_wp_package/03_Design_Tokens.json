@@ -1,0 +1,71 @@
+{
+  "project": "Haginorina Official Fan Site",
+  "colors": {
+    "tulipRed": "#E63946",
+    "springYellow": "#F4D35E",
+    "white": "#FFFFFF",
+    "warmBackground": "#F7F6F2",
+    "textMain": "#222222",
+    "textSub": "#666666",
+    "paleYellow": "#FFF3C4",
+    "paleRed": "#FFE5E2",
+    "borderLight": "#EFEAE2",
+    "shadowColor": "rgba(230, 57, 70, 0.12)"
+  },
+  "typography": {
+    "fontJapanesePrimary": [
+      "UD丸ゴ_ラージ",
+      "Rounded M+",
+      "Noto Sans JP",
+      "sans-serif"
+    ],
+    "fontEnglishLogo": [
+      "Baloo 2",
+      "Nunito",
+      "Quicksand",
+      "sans-serif"
+    ],
+    "h1": {
+      "fontSizeDesktop": "clamp(64px, 7vw, 112px)",
+      "fontSizeMobile": "clamp(44px, 15vw, 64px)",
+      "fontWeight": 700,
+      "lineHeight": 1.1,
+      "letterSpacing": "0.02em"
+    },
+    "body": {
+      "fontSize": "16px",
+      "lineHeight": 1.9,
+      "fontWeight": 400
+    },
+    "nav": {
+      "fontSize": "14px",
+      "fontWeight": 700,
+      "letterSpacing": "0.08em"
+    }
+  },
+  "radius": {
+    "xs": "8px",
+    "sm": "16px",
+    "md": "24px",
+    "lg": "40px",
+    "xl": "56px",
+    "pill": "999px"
+  },
+  "spacing": {
+    "sectionXDesktop": "clamp(40px, 5vw, 88px)",
+    "sectionXMobile": "24px",
+    "gapSmall": "12px",
+    "gapMedium": "24px",
+    "gapLarge": "48px"
+  },
+  "shadows": {
+    "soft": "0 12px 32px rgba(0, 0, 0, 0.06)",
+    "button": "0 12px 24px rgba(230, 57, 70, 0.12)",
+    "card": "0 20px 60px rgba(0, 0, 0, 0.08)"
+  },
+  "breakpoints": {
+    "mobile": "767px",
+    "tablet": "1023px",
+    "desktop": "1024px"
+  }
+}

@@ -10,6 +10,35 @@
 (function () {
   'use strict';
 
+  /* 0. Site loader — hide after first load; skip on subsequent in-session navigations.
+     Append ?loader to the URL to always show the loader (preview); does not set h_loaded. */
+  (function () {
+    var loader = document.getElementById('siteLoader');
+    if (!loader) return;
+    var loaderPreview = false;
+    try {
+      loaderPreview = new URLSearchParams(location.search).has('loader');
+    } catch (e) {}
+    // If user already saw the loader this session, mark immediately so no flash on hide
+    if (sessionStorage.getItem('h_loaded') && !loaderPreview) {
+      loader.classList.add('is-hidden');
+      return;
+    }
+    function hide() {
+      loader.classList.add('is-hidden');
+      if (!loaderPreview) sessionStorage.setItem('h_loaded', '1');
+    }
+    var MIN_SHOW = 1100; // ms — minimum display time so the animation is visible
+    var t0 = performance.now();
+    function ready() {
+      var elapsed = performance.now() - t0;
+      var wait = Math.max(0, MIN_SHOW - elapsed);
+      setTimeout(hide, wait);
+    }
+    if (document.readyState === 'complete') ready();
+    else window.addEventListener('load', ready);
+  })();
+
   /* 1. Hero title — split into chars and stagger animation */
   document.addEventListener('DOMContentLoaded', function () {
     var title = document.querySelector('[data-split-chars]');
@@ -106,10 +135,20 @@
     var mNav = document.querySelector('.mobile-nav');
     if (toggle && mNav) {
       toggle.addEventListener('click', function () {
-        mNav.classList.toggle('is-open');
+        var open = mNav.classList.toggle('is-open');
+        toggle.classList.toggle('is-open', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニュー');
+        document.body.style.overflow = open ? 'hidden' : '';
       });
       mNav.querySelectorAll('a').forEach(function (a) {
-        a.addEventListener('click', function () { mNav.classList.remove('is-open'); });
+        a.addEventListener('click', function () {
+          mNav.classList.remove('is-open');
+          toggle.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.setAttribute('aria-label', 'メニュー');
+          document.body.style.overflow = '';
+        });
       });
     }
 
