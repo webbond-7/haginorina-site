@@ -482,6 +482,11 @@ p { margin: 0; }
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
 }
+/* 活動が3つのとき用（トップ・works.html）。タブレット以下は下記メディアクエリで 1 列 */
+.works-grid--3col {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+}
 .work-card {
   position: relative;
   padding: 32px 28px 36px;
@@ -527,6 +532,19 @@ p { margin: 0; }
   position: relative; z-index: 1;
   margin-top: 18px;
   font-size: 14px; line-height: 1.9;
+  color: var(--color-text-sub);
+}
+/* works.html の「主な出演作」見出しと一覧 */
+.work-card .work-list-label {
+  margin-top: 28px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--color-red);
+}
+.work-list {
+  position: relative; z-index: 1;
+  margin: 8px 0 0; padding-left: 1.2em;
+  font-size: 14px; line-height: 2;
   color: var(--color-text-sub);
 }
 
@@ -1166,7 +1184,8 @@ p { margin: 0; }
 
 /* ---------- 18. Responsive ---------- */
 @media (max-width: 1199px) {
-  .works-grid { grid-template-columns: repeat(2, 1fr); }
+  .works-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .works-grid.works-grid--3col { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
   .gallery-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
@@ -1253,7 +1272,8 @@ p { margin: 0; }
   .hero-deco-2, .hero-deco-4, .hero-deco-12, .hero-stripe-1, .hero-dot-grid { display: none; }
   .scroll-cue { display: none; }
 
-  .works-grid { grid-template-columns: 1fr; }
+  .works-grid,
+  .works-grid.works-grid--3col { grid-template-columns: 1fr; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 140px; }
   .news-item { grid-template-columns: 100px 1fr; gap: 12px; row-gap: 6px; }
   .news-tag { grid-column: 2; }
