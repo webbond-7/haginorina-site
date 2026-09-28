@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>A 役のカード｜はぎのりな 試作</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+  /* 見立て: 裏返すたびに別人が現れる「役のカード」
+     4層 = カードの並び × 紙のカード × チューリップの赤と黄(既存) × 裏返す動き
+     情緒 = E12 発見 + E7 遊び心
+     色・角丸・影・書体は assets/css/style.css の :root と同じ値を使う(新しい値を作らない) */
+  :root {
+    --color-red: #E63946;
+    --color-red-soft: #FFE5E2;
+    --color-yellow: #F4D35E;
+    --color-yellow-soft: #FFF3C4;
+    --color-white: #FFFFFF;
+    --color-bg: #F7F6F2;
+    --color-text: #222222;
+    --color-text-sub: #666666;
+    --color-border: #EFEAE2;
+    --radius-sm: 16px;
+    --radius-md: 24px;
+    --radius-lg: 40px;
+    --radius-pill: 999px;
+    --shadow-soft: 0 12px 32px rgba(0, 0, 0, 0.06);
+    --shadow-card: 0 20px 60px rgba(0, 0, 0, 0.08);
+    --container-x: clamp(20px, 5vw, 88px);
+    --container-max: 1280px;
+    --font-jp: "Zen Maru Gothic", "UD丸ゴ_ラージ", "Rounded Mplus 1c", "Noto Sans JP", system-ui, sans-serif;
+    --font-en: "Baloo 2", "Nunito", "Quicksand", system-ui, sans-serif;
+    /* カードの裏: 既存の水玉を裏面の柄にする */
+    --card-back: radial-gradient(circle at 50% 50%, var(--color-yellow) 0 3px, transparent 3.5px) 0 0 / 18px 18px, var(--color-red);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; font-family: var(--font-jp); font-weight: 500; color: var(--color-text); background: var(--color-bg); line-height: 1.8; overflow-x: hidden; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; padding: 0; }
+  .inner { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--container-x); }
+
+  /* header */
+  .hd { display: flex; justify-content: space-between; align-items: center; padding: 20px var(--container-x); }
+  .logo { font-family: var(--font-en); font-weight: 800; font-size: 26px; color: var(--color-red); letter-spacing: .01em; }
+  .nav { display: flex; gap: 8px; }
+  .nav a { background: var(--color-white); padding: 8px 16px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 700; box-shadow: var(--shadow-soft); }
+
+  /* hero */
+  .hero { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 40px; min-height: calc(100vh - 80px); padding-bottom: 40px; }
+  .eyebrow { font-weight: 700; font-size: 14px; letter-spacing: .06em; }
+  .hero h1 { font-weight: 900; white-space: nowrap; font-size: clamp(48px, 7.4vw, 104px); color: var(--color-red); line-height: 1.1; margin: 12px 0 20px; letter-spacing: .02em; }
+  .lead { font-size: clamp(17px, 1.6vw, 20px); font-weight: 700; }
+  .lead small { display: block; font-size: 14px; font-weight: 500; color: var(--color-text-sub); margin-top: 6px; }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px; border-radius: var(--radius-pill); font-weight: 700; background: var(--color-yellow); box-shadow: 0 12px 24px rgba(230, 57, 70, 0.12); }
+  .btn.ghost { background: var(--color-white); }
+
+  .deck { position: relative; height: min(64vh, 560px); }
+  .deck .d { position: absolute; left: 50%; top: 50%; width: min(24vw, 250px); aspect-ratio: 5/7; margin: 0; border-radius: var(--radius-md); overflow: hidden; background: var(--color-white); padding: 10px; box-shadow: var(--shadow-card);
+    transform: translate(-50%, -50%) rotate(var(--r)) translateX(var(--x)); transition: transform .6s cubic-bezier(.22,1,.36,1); }
+  .deck .d img { width: 100%; height: 100%; object-fit: cover; border-radius: calc(var(--radius-md) - 8px); }
+  .deck .d.back { background: var(--card-back); display: grid; place-items: center; color: var(--color-white); text-align: center; }
+  .deck .d.back b { font-family: var(--font-en); font-size: 64px; line-height: 1; display: block; }
+  .deck .d.back span { font-family: var(--font-en); font-weight: 700; letter-spacing: .2em; font-size: 13px; background: var(--color-red); padding: 2px 10px; border-radius: var(--radius-pill); }
+  .deck:hover .d, .deck.is-open .d { transform: translate(-50%, -50%) rotate(calc(var(--r) * 1.3)) translateX(calc(var(--x) * 1.35)); }
+
+  /* section heads */
+  .sec { padding: 96px 0; }
+  .sec-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; margin-bottom: 40px; }
+  .sec-head .en { font-family: var(--font-en); font-weight: 800; font-size: clamp(40px, 6vw, 72px); color: var(--color-red); line-height: 1; }
+  .sec-head .jp { font-size: 13px; letter-spacing: .14em; color: var(--color-text-sub); font-weight: 700; display: block; margin-bottom: 8px; }
+  .sec-head p { color: var(--color-text-sub); margin: 0; }
+
+  /* role cards */
+  .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+  .card { perspective: 1400px; aspect-ratio: 5/7; text-align: left; width: 100%; }
+  .card .flip { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .8s cubic-bezier(.22,1,.36,1); }
+  .card.is-flipped .flip { transform: rotateY(180deg); }
+  .card .face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-card); }
+  .card .front { background: var(--color-white); padding: 12px; display: flex; flex-direction: column; }
+  .card .front .ph { flex: 1; border-radius: calc(var(--radius-md) - 10px); overflow: hidden; background: var(--color-red-soft); position: relative; }
+  .card .front .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+  .card:hover .front .ph img { transform: scale(1.04); }
+  .card .front .ph.none { display: grid; place-items: center; color: var(--color-red); font-weight: 700; font-size: 13px; text-align: center; line-height: 1.6; }
+  .card .front .ph.none b { font-family: var(--font-en); font-size: 72px; line-height: 1; display: block; }
+  .card .label { padding: 14px 8px 4px; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .card .label strong { font-size: 22px; font-weight: 900; }
+  .card .label small { font-size: 12px; color: var(--color-text-sub); text-align: right; }
+  .card .num { position: absolute; top: 22px; left: 22px; z-index: 2; background: var(--color-white); font-family: var(--font-en); font-weight: 800; font-size: 13px; padding: 2px 10px; border-radius: var(--radius-pill); color: var(--color-red); }
+  .card .back { transform: rotateY(180deg); background: var(--card-back); padding: 18px; display: flex; }
+  .card .back .paper { background: var(--color-white); border-radius: calc(var(--radius-md) - 8px); padding: 28px 24px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .card .back .role { font-size: 13px; color: var(--color-red); font-weight: 700; letter-spacing: .1em; }
+  .card .back h3 { margin: 6px 0 16px; font-size: 22px; line-height: 1.4; font-weight: 900; }
+  .card .back dl { margin: 0; font-size: 14px; display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; }
+  .card .back dt { color: var(--color-text-sub); }
+  .card .back dd { margin: 0; font-weight: 700; }
+  .hint { font-size: 12px; color: var(--color-text-sub); text-align: center; margin-top: 18px; }
+
+  /* next */
+  .next { background: var(--color-white); border-radius: var(--radius-lg); padding: clamp(28px, 5vw, 64px); display: grid; grid-template-columns: minmax(0, 340px) 1fr; gap: 48px; align-items: center; box-shadow: var(--shadow-soft); }
+  .next .card { max-width: 340px; }
+  .next .card .front { background: var(--card-back); padding: 0; display: grid; place-items: center; color: var(--color-white); text-align: center; }
+  .next .card .front b { font-family: var(--font-en); font-size: 120px; line-height: 1; display: block; }
+  .next .card .front span { font-weight: 700; background: var(--color-red); padding: 4px 14px; border-radius: var(--radius-pill); font-size: 14px; }
+  .next h2 { font-size: clamp(24px, 3vw, 34px); font-weight: 900; line-height: 1.4; margin: 8px 0 16px; }
+  .next .date { font-family: var(--font-en); font-weight: 800; font-size: clamp(36px, 5vw, 56px); color: var(--color-red); line-height: 1; }
+  .next ul { list-style: none; padding: 0; margin: 28px 0 0; border-top: 1px dashed var(--color-border); }
+  .next li { display: grid; grid-template-columns: 120px 1fr; gap: 12px; padding: 14px 0; border-bottom: 1px dashed var(--color-border); font-size: 15px; }
+  .next li b { font-family: var(--font-en); color: var(--color-red); }
+
+  .ft { text-align: center; padding: 48px 0 64px; font-size: 13px; color: var(--color-text-sub); }
+  .ft a { color: var(--color-red); font-weight: 700; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 16px; }
+    .deck { height: 420px; order: -1; }
+    .deck .d { width: 150px; }
+    .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .card .label strong { font-size: 17px; }
+    .card .label { flex-direction: column; gap: 0; }
+    .card .label small { text-align: left; }
+    .card .back { padding: 10px; }
+    .card .back .paper { padding: 16px 14px; }
+    .card .back h3 { font-size: 16px; }
+    .card .back dl { font-size: 12px; grid-template-columns: 1fr; gap: 0; }
+    .card .back dt { margin-top: 6px; }
+    .next { grid-template-columns: 1fr; }
+    .next .card { margin: 0 auto; width: 240px; }
+    .nav { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  </style>
+</head>
+<body>
+
+<header class="hd">
+  <a class="logo" href="index.html">Haginorina</a>
+  <nav class="nav">
+    <a href="#roles">役のカード</a>
+    <a href="#next">次の役</a>
+    <a href="../gallery.html">Gallery</a>
+    <a href="../contact.html">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <section class="inner hero">
+    <div>
+      <div class="eyebrow">フリーの役者 / たまにモデル</div>
+      <h1>はぎのりな</h1>
+      <p class="lead">役がかわるたび、別人になる。<small>このカードの顔は、ぜんぶ同じひとです。</small></p>
+      <div class="cta-row">
+        <a class="btn" href="#roles">カードを裏返す ↓</a>
+        <a class="btn ghost" href="#next">次の役を見る</a>
+      </div>
+    </div>
+    <div class="deck" id="deck" aria-hidden="true">
+      <figure class="d" style="--r:-16deg;--x:-62%"><img src="img/role-midorikawa.jpg" alt="" style="object-position:center 20%"></figure>
+      <figure class="d" style="--r:-6deg;--x:-22%"><img src="img/role-kotone.jpg" alt="" style="object-position:center 30%"></figure>
+      <figure class="d" style="--r:6deg;--x:22%"><img src="../assets/images/x02.jpg" alt="" style="object-position:center 20%"></figure>
+      <figure class="d back" style="--r:16deg;--x:62%"><div><b>?</b><span>NEXT ROLE</span></div></figure>
+    </div>
+  </section>
+
+  <section class="sec" id="roles">
+    <div class="inner">
+      <div class="sec-head">
+        <div><span class="jp">ROLES — 役のカード</span><span class="en">Roles.</span></div>
+        <p>タップすると、カードが裏返って作品がわかります。</p>
+      </div>
+      <div class="cards">
+        <button class="card" aria-label="コメット役のカードを裏返す">
+          <div class="flip">
+            <div class="face front"><span class="num">01</span><div class="ph"><img src="../assets/images/x02.jpg" alt="コメット役のはぎのりな" style="object-position:center 20%"></div><div class="label"><strong>コメット</strong><small>2026</small></div></div>
+            <div class="face back"><div class="paper"><span class="role">ROLE 01</span><h3>「グノーシア ザ・ライブプレイングシアター」</h3><dl><dt>役</dt><dd>コメット</dd><dt>期間</dt><dd>2026.8.21 – 9.6</dd><dt>劇場</dt><dd>飛行船シアター</dd></dl></div></div>
+          </div>
+        </button>
+        <button class="card" aria-label="緑川夫人役のカードを裏返す">
+          <div class="flip">
+            <div class="face front"><span class="num">02</span><div class="ph"><img src="img/role-midorikawa.jpg" alt="緑川夫人役のはぎのりな" style="object-position:center 20%"></div><div class="label"><strong>緑川夫人</strong><small>2026</small></div></div>
+            <div class="face back"><div class="paper"><span class="role">ROLE 02</span><h3>イルカ団!!「アルセーヌ・ルパン!!!!」</h3><dl><dt>役</dt><dd>緑川夫人（黄金仮面チーム）</dd><dt>期間</dt><dd>2026.2.18 – 3.1</dd><dt>劇場</dt><dd>ウッディシアター中目黒</dd></dl></div></div>
+          </div>
+        </button>
+        <button class="card" aria-label="琴音役のカードを裏返す">
+          <div class="flip">
+            <div class="face front"><span class="num">03</span><div class="ph"><img src="img/role-kotone-stage.jpg" alt="琴音役のはぎのりな" style="object-position:center 25%"></div><div class="label"><strong>琴音</strong><small>2026</small></div></div>
+            <div class="face back"><div class="paper"><span class="role">ROLE 03</span><h3>イルカ団!!「Q.T!!!!」</h3><dl><dt>役</dt><dd>琴音（Bチーム）</dd><dt>期間</dt><dd>2026.5.27 – 5.31</dd><dt>劇場</dt><dd>ウッディシアター中目黒</dd></dl></div></div>
+          </div>
+        </button>
+        <button class="card" aria-label="美緒役のカードを裏返す">
+          <div class="flip">
+            <div class="face front"><span class="num">04</span><div class="ph none"><div><b>?</b>写真をいただいて<br>差し替えます</div></div><div class="label"><strong>美緒</strong><small>2025</small></div></div>
+            <div class="face back"><div class="paper"><span class="role">ROLE 04</span><h3>イルカ団!!『天爛のパティシエ』</h3><dl><dt>役</dt><dd>美緒（Aチーム）</dd><dt>期間</dt><dd>2025.7.2 – 7.6</dd><dt>劇場</dt><dd>テアトルBONBON</dd></dl></div></div>
+          </div>
+        </button>
+        <button class="card" aria-label="キンバリー役のカードを裏返す">
+          <div class="flip">
+            <div class="face front"><span class="num">05</span><div class="ph none"><div><b>?</b>写真をいただいて<br>差し替えます</div></div><div class="label"><strong>キンバリー</strong><small>レギュラー</small></div></div>
+            <div class="face back"><div class="paper"><span class="role">ROLE 05</span><h3>「人狼 ザ・ライブプレイングシアター」</h3><dl><dt>役</dt><dd>キンバリー ほか</dd><dt>劇場</dt><dd>新宿村LIVE ほか</dd></dl></div></div>
+          </div>
+        </button>
+        <button class="card" aria-label="素顔のカードを裏返す">
+          <div class="flip">
+            <div class="face front"><span class="num">06</span><div class="ph"><img src="img/mirror-selfie.jpg" alt="素顔のはぎのりな" style="object-position:center 25%"></div><div class="label"><strong>素顔</strong><small>はぎのりな</small></div></div>
+            <div class="face back"><div class="paper"><span class="role">NO ROLE</span><h3>はぎのりな</h3><dl><dt>誕生日</dt><dd>10月3日</dd><dt>仕事</dt><dd>フリーの役者 / たまにモデル</dd><dt>ほかに</dt><dd>脚本・演出も手がける</dd></dl></div></div>
+          </div>
+        </button>
+      </div>
+      <p class="hint">カードは作品が増えるたびに1枚ずつ増えていきます</p>
+    </div>
+  </section>
+
+  <section class="sec" id="next" style="padding-top:0">
+    <div class="inner">
+      <div class="sec-head">
+        <div><span class="jp">NEXT — 次の役</span><span class="en">Next role.</span></div>
+      </div>
+      <div class="next">
+        <button class="card" aria-label="次の役のカードを裏返す">
+          <div class="flip">
+            <div class="face front"><div><b>?</b><span>次の役は、劇場で</span></div></div>
+            <div class="face back"><div class="paper"><span class="role">NEXT</span><h3>全ステージ出演</h3><dl><dt>日程</dt><dd>2026.10.13 – 10.14</dd><dt>会場</dt><dd>新宿村LIVE</dd></dl></div></div>
+          </div>
+        </button>
+        <div>
+          <div class="date">10.13 – 10.14</div>
+          <h2>人狼TLPT 14周年記念<br>「Festival Stage」全ステージに出演</h2>
+          <a class="btn" href="../news-single.html">公演情報を見る →</a>
+          <ul>
+            <li><b>10.25</b><span>劇団ちゃきんちゃきん 10周年記念公演　ゲスト出演（昼の回）</span></li>
+            <li><b>2027.02</b><span>人狼TLPT #58「ヴィレッヂ」　演出を担当</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="ft">
+  <p>A 役のカード（試作）　<a href="index.html">← 見比べページへ戻る</a></p>
+</footer>
+
+<script>
+  document.querySelectorAll('.card').forEach(function (c) {
+    c.addEventListener('click', function () { c.classList.toggle('is-flipped'); });
+  });
+  var deck = document.getElementById('deck');
+  if (deck) deck.addEventListener('click', function () { deck.classList.toggle('is-open'); });
+</script>
+</body>
+</html>

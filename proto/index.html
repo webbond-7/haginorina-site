@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>見比べ｜はぎのりな 試作</title>
+  <meta name="robots" content="noindex" />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+  :root { --color-red: #E63946; --color-yellow: #F4D35E; --color-white: #FFFFFF; --color-bg: #F7F6F2; --color-text: #222222; --color-text-sub: #666666; --radius-md: 24px; --radius-pill: 999px; --shadow-soft: 0 12px 32px rgba(0,0,0,.06); }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Zen Maru Gothic", system-ui, sans-serif; background: var(--color-bg); color: var(--color-text); line-height: 1.8; }
+  main { max-width: 1100px; margin: 0 auto; padding: 56px 20px 80px; }
+  h1 { font-size: clamp(26px, 4vw, 36px); margin: 0 0 8px; }
+  .lead { color: var(--color-text-sub); margin: 0 0 36px; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  a.t { display: block; background: var(--color-white); border-radius: var(--radius-md); padding: 26px 26px 24px; box-shadow: var(--shadow-soft); color: inherit; text-decoration: none; border: 2px solid transparent; transition: border-color .2s, transform .2s; }
+  a.t:hover { border-color: var(--color-red); transform: translateY(-3px); }
+  .k { display: inline-block; font-family: "Baloo 2", sans-serif; font-weight: 800; background: var(--color-yellow); padding: 0 12px; border-radius: var(--radius-pill); font-size: 14px; }
+  .k.now { background: #e8e5de; }
+  h2 { font-size: 21px; margin: 12px 0 6px; }
+  p { margin: 0; font-size: 14px; color: var(--color-text-sub); }
+  .how { margin-top: 12px; font-size: 13px; color: var(--color-red); font-weight: 700; }
+  .note { margin-top: 40px; font-size: 13px; color: var(--color-text-sub); background: var(--color-white); border-radius: 16px; padding: 18px 22px; }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<main>
+  <h1>はぎのりな様サイト　見比べ</h1>
+  <p class="lead">伝えたいのは「役ごとに別人になる振り幅」。見た人に「次はどんな役なんだろう」と思ってもらえるかで見比べてください。</p>
+  <div class="grid">
+    <a class="t" href="../index.html"><span class="k now">現行</span><h2>今のサイト</h2><p>水玉と丸の飾りで、明るくやさしいポップ。比べるための基準です。</p></a>
+    <a class="t" href="c-subtle.html"><span class="k">C</span><h2>小さな手直し版</h2><p>見た目は今のまま。最初の写真に役の顔を混ぜ、次の舞台の帯と「これまでの役」を足しました。</p><div class="how">最初の写真が切り替わるのを数秒見てください</div></a>
+    <a class="t" href="a-card.html"><span class="k">A</span><h2>役のカード</h2><p>役ごとの写真がカードになり、タップで裏返すと作品がわかります。裏面は今の水玉を柄にしました。</p><div class="how">カードをタップしてください</div></a>
+    <a class="t" href="b-mirror.html"><span class="k">B</span><h2>楽屋の鏡台</h2><p>電球に囲まれた鏡の中で、スクロールすると素顔が役へ変わり、また素顔に戻ります。</p><div class="how">ゆっくり下へスクロールしてください</div></a>
+  </div>
+  <p class="note">試作です。写真は本人のX投稿から仮に使っています（舞台写真は公開前に使用の許可を確認します）。「美緒」「キンバリー」のカードは写真が届くまで「？」にしています。</p>
+</main>
+</body>
+</html>

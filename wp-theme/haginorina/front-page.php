@@ -1,72 +1,9 @@
-<!doctype html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>はぎのりな Official Fan Site｜Haginorina</title>
-  <meta name="description" content="はぎのりな 公式ファンサイト。舞台・映像・モデル活動・写真・お知らせなどを発信します。" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Baloo+2:wght@500;600;700;800&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="assets/css/style.css" />
-
-  <script>
-  (function () {
-    try {
-      if (new URLSearchParams(location.search).has('loader')) {
-        sessionStorage.removeItem('h_loaded');
-        return;
-      }
-      if (sessionStorage.getItem('h_loaded')) document.documentElement.classList.add('no-loader');
-    } catch (e) {}
-  })();
-  </script>
-</head>
-<body data-screen-label="Top">
-<!-- SITE LOADER -->
-<div class="site-loader" id="siteLoader" aria-hidden="true">
-  <div class="buddy-wrap">
-    <img class="buddy" src="assets/icons/loader-buddy.png" alt="" />
-    <div class="buddy-shadow"></div>
-  </div>
-  <div class="label" aria-label="Now Loading">
-    <span>N</span><span>o</span><span>w</span><span>&nbsp;</span><span>L</span><span>o</span><span>a</span><span>d</span><span>i</span><span>n</span><span>g</span><span>.</span><span>.</span><span>.</span>
-  </div>
-</div>
-
-
-<!-- ============ HEADER ============ -->
-<header class="site-header">
-  <a class="logo" href="index.html" aria-label="Haginorina Official Fan Site">
-    <div>
-      <span class="logo-mark">
-        Haginorina
-        <img class="tulip" src="assets/icons/tulip.png" alt="" aria-hidden="true" />
-      </span>
-      <span class="logo-sub">Official Fan Site</span>
-    </div>
-  </a>
-
-  <nav class="main-nav" aria-label="グローバルナビゲーション">
-    <a class="nav-pill is-active" href="#works" data-nav-link="works">活動紹介</a>
-    <a class="nav-pill" href="gallery.html">Photo / Gallery</a>
-    <a class="nav-pill" href="news.html">News / Info</a>
-    <a class="nav-pill" href="contact.html">Contact &amp; SNS</a>
-  </nav>
-
-  <button class="nav-toggle" aria-label="メニュー" aria-controls="mobileNav" aria-expanded="false">
-    <span></span>
-  </button>
-</header>
-
-<aside id="mobileNav" class="mobile-nav" aria-label="モバイルナビゲーション">
-  <a href="#works">活動紹介 <span class="arrow">→</span></a>
-  <a href="gallery.html">Photo / Gallery <span class="arrow">→</span></a>
-  <a href="news.html">News / Info <span class="arrow">→</span></a>
-  <a href="contact.html">Contact &amp; SNS <span class="arrow">→</span></a>
-</aside>
-
+<?php
+/**
+ * トップページ
+ */
+get_header();
+?>
 <!-- ============ HERO / FV ============ -->
 <section class="hero" data-screen-label="01 FV" data-section="hero" aria-label="First View">
 
@@ -107,7 +44,7 @@
       皆さんと出会えますように。
     </p>
 
-    <a class="hero-cta reveal" href="news.html">
+    <a class="hero-cta reveal" href="<?php echo esc_url( hn_url( 'news' ) ); ?>">
       <span>最新情報をチェック</span>
       <span class="arrow" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
@@ -124,9 +61,9 @@
   <!-- Right: visual -->
   <div class="hero-visual-wrap">
     <div class="hero-visual">
-      <div class="hero-slide is-active"><img src="assets/images/hero-main-01.jpg" alt="はぎのりな メインビジュアル 01" style="object-position: 100% 50%;" /></div>
-      <div class="hero-slide"><img src="assets/images/hero-main-02.jpg" alt="はぎのりな メインビジュアル 02" aria-hidden="true" style="object-position: 34% 50%;" /></div>
-      <div class="hero-slide"><img src="assets/images/hero-main-03.jpg" alt="はぎのりな メインビジュアル 03" aria-hidden="true" style="object-position: 10% 50%;" /></div>
+      <div class="hero-slide is-active"><?php echo hn_hero_img( 1 ); ?></div>
+      <div class="hero-slide"><?php echo hn_hero_img( 2 ); ?></div>
+      <div class="hero-slide"><?php echo hn_hero_img( 3 ); ?></div>
 
       <div class="slide-indicator" aria-label="メインビジュアル切替">
         <button class="is-active" aria-label="1枚目"></button>
@@ -138,7 +75,7 @@
     <div class="thank-you-badge" aria-hidden="true">
       <span class="script">Thank you</span>
       <span class="sub">for always<br>supporting me!</span>
-      <img class="tulip" src="assets/icons/tulip.png" alt="" />
+      <img class="tulip" src="<?php echo hn_asset( 'icons/tulip.png' ); ?>" alt="" />
     </div>
   </div>
 
@@ -149,15 +86,7 @@
 </section>
 
 <!-- ============ NEXT STAGE ============ -->
-<section class="next-band" aria-label="次の舞台">
-  <div class="next-band-inner">
-    <span class="next-card" aria-hidden="true">?</span>
-    <span class="next-label">NEXT STAGE</span>
-    <span class="next-date">10.13<small>TUE</small> – 10.14<small>WED</small></span>
-    <span class="next-title">人狼TLPT 14周年記念「Festival Stage」全ステージ出演<em>新宿村LIVE</em></span>
-    <a class="next-btn" href="news-single.html">次の役に会いに行く <span aria-hidden="true">→</span></a>
-  </div>
-</section>
+<?php get_template_part( 'template-parts/next-band' ); ?>
 
 <!-- ============ ABOUT / CONCEPT ============ -->
 <section class="section section-bg-white" data-section="about" aria-label="コンセプト">
@@ -191,7 +120,7 @@
     <div class="section-head reveal">
       <h2 class="section-title">
         <span class="jp">WORKS — 活動紹介</span>
-        <img src="assets/icons/tulip.png" class="tulip-small" alt="" />Works
+        <img src="<?php echo hn_asset( 'icons/tulip.png' ); ?>" class="tulip-small" alt="" />Works
       </h2>
       <p class="section-lead">
         舞台・映像・モデル──<br>
@@ -220,7 +149,7 @@
         <p>たまにモデルとして撮影に参加。衣装と空気感に合わせて、別の自分でいる楽しさがあります。</p>
       </article>
     </div>
-    <p class="role-cards-hint reveal"><a href="works.html#roles" style="color:var(--color-red);font-weight:700;">これまでの役をカードで見る →</a></p>
+    <p class="role-cards-hint reveal"><a href="<?php echo esc_url( hn_url( 'works' ) ); ?>#roles" style="color:var(--color-red);font-weight:700;">これまでの役をカードで見る →</a></p>
   </div>
 </section>
 
@@ -239,19 +168,18 @@
 
     <div class="profile-band reveal">
       <div class="profile-photo">
-        <img src="assets/images/profile.jpg" alt="はぎのりな プロフィールフォト" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position: 50% 0%;" />
+        <?php echo hn_profile_img(); ?>
       </div>
       <div class="profile-info">
         <dl>
-          <dt>Name</dt><dd>はぎのりな / Haginorina</dd>
-          <dt>Birthday</dt><dd>1991年10月3日</dd>
-          <dt>Activity</dt><dd>役者 / モデル / 脚本・演出</dd>
-          <dt>Field</dt><dd>舞台 / 映像・配信 / モデル</dd>
-          <dt>Status</dt><dd>出演・撮影・コラボ 受付中</dd>
+          <dt>Name</dt><dd><?php echo esc_html( hn_profile( 'name' ) ); ?></dd>
+          <dt>Birthday</dt><dd><?php echo esc_html( hn_profile( 'birthday' ) ); ?></dd>
+          <dt>Activity</dt><dd><?php echo esc_html( hn_profile( 'activity' ) ); ?></dd>
+          <dt>Field</dt><dd><?php echo esc_html( hn_profile( 'field' ) ); ?></dd>
+          <dt>Status</dt><dd><?php echo esc_html( hn_profile( 'status' ) ); ?></dd>
         </dl>
         <p>
-          表現することが大好きです。舞台や映像、撮影──色々な場所で、見てくれる人と少しだけ感情を共有できたら嬉しいです。<br>
-          ふつうとヘンのあわいで、ちいさな魔法を起こすつもりで活動しています。
+          <?php echo nl2br( esc_html( hn_profile( 'text' ) ) ); ?>
         </p>
       </div>
     </div>
@@ -268,34 +196,20 @@
         <span class="jp">NEWS / INFO — お知らせ</span>
         News.
       </h2>
-      <a class="nav-pill" href="news.html" style="background:var(--color-yellow);">ALL NEWS →</a>
+      <a class="nav-pill" href="<?php echo esc_url( hn_url( 'news' ) ); ?>" style="background:var(--color-yellow);">ALL NEWS →</a>
     </div>
 
-    <div class="news-list reveal">
-      <a class="news-item" href="news.html">
-        <span class="news-date">2026.09.22</span>
-        <span class="news-tag tag-yel">配信</span>
-        <span class="news-title">「アルティメット人狼」スリアロコラボ回に出演しました</span>
-        <span class="news-arrow">→</span>
-      </a>
-      <a class="news-item" href="news.html">
-        <span class="news-date">2026.09.13</span>
-        <span class="news-tag tag-red">舞台</span>
-        <span class="news-title">dopeAdope step.13「ドープアウト」アフターミニトークに出演します（9/20 上野ストアハウス）</span>
-        <span class="news-arrow">→</span>
-      </a>
-      <a class="news-item" href="news.html">
-        <span class="news-date">2026.09.04</span>
-        <span class="news-tag tag-red">舞台</span>
-        <span class="news-title">人狼TLPT 14周年記念「Festival Stage」全ステージに出演します（10/13・14 新宿村LIVE）</span>
-        <span class="news-arrow">→</span>
-      </a>
-      <a class="news-item" href="news.html">
-        <span class="news-date">2026.08.26</span>
-        <span class="news-tag tag-yel">配信</span>
-        <span class="news-title">人狼TLPT公式番組「セブンスエデン」第139回にゲスト出演しました</span>
-        <span class="news-arrow">→</span>
-      </a>
+        <div class="news-list reveal">
+<?php
+$hn_news = get_posts( array( 'numberposts' => 4 ) );
+if ( $hn_news ) {
+	foreach ( $hn_news as $p ) {
+		hn_news_item( $p );
+	}
+} else {
+	echo '<p style="color:var(--color-text-sub);">お知らせは準備中です。</p>';
+}
+?>
     </div>
   </div>
 </section>
@@ -308,18 +222,17 @@
         <span class="jp">PHOTO / GALLERY — 写真</span>
         Gallery.
       </h2>
-      <a class="nav-pill" href="gallery.html" style="background:var(--color-yellow);">VIEW ALL →</a>
+      <a class="nav-pill" href="<?php echo esc_url( hn_url( 'gallery' ) ); ?>" style="background:var(--color-yellow);">VIEW ALL →</a>
     </div>
 
     <div class="gallery-grid reveal">
-      <a class="gallery-item span-2x2" href="gallery.html"><img src="assets/images/g01.jpg" alt="" style="object-position: 50% 77%; position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></a>
-      <a class="gallery-item" href="gallery.html"><img src="assets/images/g04.jpg" alt="" style="object-position: 50% 26%; position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></a>
-      <a class="gallery-item" href="gallery.html"><img src="assets/images/g05.jpg" alt="" style="object-position: 50% 24%; position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></a>
-      <a class="gallery-item" href="gallery.html"><img src="assets/images/g03.jpg" alt="" style="object-position: 50% 61%; position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></a>
-      <a class="gallery-item" href="gallery.html"><img src="assets/images/g06.jpg" alt="" style="object-position: 50% 100%; position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></a>
-      <a class="gallery-item span-2x1" href="gallery.html"><img src="assets/images/g07.jpg" alt="" style="object-position: 50% 22%; position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></a>
-      <a class="gallery-item" href="gallery.html"><img src="assets/images/g02.jpg" alt="" style="object-position: 50% 53%; position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></a>
-      <a class="gallery-item" href="gallery.html"><img src="assets/images/g08.jpg" alt="" style="object-position: 50% 2%; position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></a>
+<?php
+$hn_spans  = array( 'span-2x2', '', '', '', '', 'span-2x1', '', '' );
+$hn_photos = get_posts( array( 'post_type' => 'hn_photo', 'numberposts' => 8, 'orderby' => array( 'menu_order' => 'ASC', 'date' => 'DESC' ) ) );
+foreach ( $hn_photos as $i => $p ) :
+	?>
+      <a class="gallery-item <?php echo esc_attr( $hn_spans[ $i ] ); ?>" href="<?php echo esc_url( hn_url( 'gallery' ) ); ?>"><?php echo hn_cover_img( $p->ID, 'hn-large', 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;' ); ?></a>
+<?php endforeach; ?>
     </div>
   </div>
 </section>
@@ -344,7 +257,7 @@
           舞台・映像・撮影・寄稿・コラボなど、表現に関わるご相談はフォームよりお気軽にお寄せください。<br>
           内容を確認のうえ、3〜7日以内にご返信いたします。
         </p>
-        <a class="btn-primary" href="contact.html">
+        <a class="btn-primary" href="<?php echo esc_url( hn_url( 'contact' ) ); ?>">
           フォームを開く
           <span aria-hidden="true">→</span>
         </a>
@@ -371,52 +284,4 @@
   </div>
 </section>
 
-<!-- ============ FOOTER ============ -->
-<footer class="site-footer">
-  <span class="deco deco-circle" aria-hidden="true" style="position:absolute;top:-100px;left:-80px;width:280px;height:280px;"></span>
-  <span class="deco deco-circle" aria-hidden="true" style="position:absolute;bottom:-160px;right:-100px;width:320px;height:320px;background:rgba(244,211,94,0.12);"></span>
-
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <span class="logo-mark">
-        Haginorina
-        <img class="tulip" src="assets/icons/tulip.png" alt="" style="width:24px;height:24px;transform:translateY(4px);">
-      </span>
-      <span class="logo-sub">Official Fan Site</span>
-      <p>表現することが大好きな、フリーの役者 / たまにモデル。<br>境界を感じて、日常を変えていく。</p>
-    </div>
-    <div class="footer-col">
-      <h4>SITE MAP</h4>
-      <ul>
-        <li><a href="index.html#works">活動紹介</a></li>
-        <li><a href="gallery.html">Photo / Gallery</a></li>
-        <li><a href="news.html">News / Info</a></li>
-        <li><a href="contact.html">Contact &amp; SNS</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>WORKS</h4>
-      <ul>
-        <li><a href="index.html#works">舞台</a></li>
-        <li><a href="index.html#works">映像</a></li>
-        <li><a href="index.html#works">モデル</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>FOLLOW</h4>
-      <ul>
-        <li><a href="https://x.com/rinasa__n" target="_blank" rel="noopener">X (Twitter)</a></li>
-        <li><a href="https://www.instagram.com/haginori02/" target="_blank" rel="noopener">Instagram</a></li>
-        <li><a href="#">YouTube</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2026 Haginorina. All Rights Reserved.</span>
-    <span>Feel the Boundary, Transform the Ordinary.</span>
-  </div>
-</footer>
-
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+<?php get_footer(); ?>

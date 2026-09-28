@@ -1,0 +1,27 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/",
+  "preferredVersions": {
+    "php": "8.2",
+    "wp": "latest"
+  },
+  "steps": [
+    {
+      "step": "setSiteOptions",
+      "options": {
+        "blogname": "はぎのりな Official Fan Site",
+        "blogdescription": "Haginorina",
+        "timezone_string": "Asia/Tokyo",
+        "WPLANG": "ja"
+      }
+    },
+    {
+      "step": "activateTheme",
+      "themeFolderName": "haginorina"
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require '/wordpress/wp-load.php'; wp_set_current_user(1); print_r( hn_seed_run( true ) );"
+    }
+  ]
+}

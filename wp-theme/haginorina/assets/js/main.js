@@ -223,13 +223,18 @@
       if (!items.length) return;
 
       // Collect <img> sources (skip items that only have a placeholder)
-      var entries = items
-        .map(function (a) {
-          var img = a.querySelector('img');
-          return img ? { src: img.src, alt: img.alt || '' } : null;
-        })
-        .filter(Boolean);
-
+      var entries = [];
+      function collect() {
+        entries = items
+          .filter(function (a) { return !a.hidden && a.querySelector('img'); })
+          .map(function (a) {
+            var img = a.querySelector('img');
+            var href = a.getAttribute('href') || '';
+            var full = /\.(jpe?g|png|webp|gif)(\?.*)?$/i.test(href) ? href : (img.currentSrc || img.src);
+            return { el: a, src: full, alt: a.getAttribute('data-caption') || img.alt || '' };
+          });
+      }
+      collect();
       if (!entries.length) return;
 
       // Build lightbox markup once
@@ -279,8 +284,8 @@
         a.addEventListener('click', function (e) {
           e.preventDefault();
           // figure out actual entries index
-          var src = a.querySelector('img').src;
-          var entryIdx = entries.findIndex(function (en) { return en.src === src; });
+          collect();
+          var entryIdx = entries.findIndex(function (en) { return en.el === a; });
           open(entryIdx >= 0 ? entryIdx : 0);
         });
       });

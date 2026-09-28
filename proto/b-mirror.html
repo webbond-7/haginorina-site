@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>B 楽屋の鏡台｜はぎのりな 試作</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+  /* 見立て: 電球に囲まれた楽屋の鏡。素顔と役のあいだ(境界)を見せる
+     4層 = スクロールで物語を見せる構成 × 少しざらついた質感 × 暗い楽屋と電球の光・差し色にチューリップの赤 × スクロールで素顔が役へ変わる
+     情緒 = E11 没入 + E8 緊張
+     色は assets/css/style.css の :root の値だけを使う。暗い面は既存の文字色 #222222 を土台にする */
+  :root {
+    --color-red: #E63946;
+    --color-yellow: #F4D35E;
+    --color-yellow-soft: #FFF3C4;
+    --color-white: #FFFFFF;
+    --color-bg: #F7F6F2;
+    --color-text: #222222;
+    --color-text-sub: #666666;
+    --radius-sm: 16px;
+    --radius-md: 24px;
+    --radius-pill: 999px;
+    --font-jp: "Zen Maru Gothic", "UD丸ゴ_ラージ", "Rounded Mplus 1c", "Noto Sans JP", system-ui, sans-serif;
+    --font-en: "Baloo 2", "Nunito", "Quicksand", system-ui, sans-serif;
+    --container-x: clamp(20px, 5vw, 88px);
+
+    --room: var(--color-text);
+    --room-2: color-mix(in srgb, var(--color-text) 88%, var(--color-yellow));
+    --ink-on-dark: var(--color-bg);
+    --ink-on-dark-sub: color-mix(in srgb, var(--color-bg) 62%, var(--color-text));
+    --bulb: var(--color-yellow);
+    --bulb-glow: 0 0 10px var(--color-yellow), 0 0 28px color-mix(in srgb, var(--color-yellow) 60%, transparent);
+    --frame: color-mix(in srgb, var(--color-text) 70%, var(--color-yellow));
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; font-family: var(--font-jp); font-weight: 500; background: var(--room); color: var(--ink-on-dark); line-height: 1.8; overflow-x: hidden; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+
+  /* 質感: 部屋の空気にうすいざらつき */
+  body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 50; opacity: .08;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+  /* 電球の光が壁にぼんやり落ちる */
+  body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 45%, color-mix(in srgb, var(--color-yellow) 12%, transparent), transparent 70%); }
+
+  .hd { position: fixed; top: 0; left: 0; right: 0; z-index: 40; display: flex; justify-content: space-between; align-items: center; padding: 18px var(--container-x); }
+  .logo { font-family: var(--font-en); font-weight: 800; font-size: 24px; color: var(--ink-on-dark); }
+  .logo i { font-style: normal; color: var(--color-red); }
+  .nav { display: flex; gap: 22px; font-size: 13px; font-weight: 700; color: var(--ink-on-dark-sub); }
+  .nav a:hover { color: var(--bulb); }
+
+  /* ---- 鏡 ---- */
+  .mirror { position: relative; width: min(78vw, 420px); aspect-ratio: 3/4; border-radius: 28px; padding: 26px; background: var(--frame);
+    box-shadow: 0 40px 80px rgba(0,0,0,.45), inset 0 0 0 2px color-mix(in srgb, var(--color-yellow) 25%, transparent); }
+  .mirror .glass { position: relative; width: 100%; height: 100%; border-radius: 14px; overflow: hidden; background: #000; }
+  .mirror .glass img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; filter: blur(14px) saturate(.6); transform: scale(1.06);
+    transition: opacity 1s ease, filter 1.1s ease, transform 1.4s cubic-bezier(.22,1,.36,1); }
+  .mirror .glass img.on { opacity: 1; filter: none; transform: none; }
+  .mirror .glass::after { content: ""; position: absolute; inset: 0; background: linear-gradient(125deg, rgba(255,255,255,.18) 0%, transparent 32%, transparent 70%, rgba(255,255,255,.06) 100%); pointer-events: none; }
+  .bulbs { position: absolute; inset: 0; pointer-events: none; }
+  .bulbs span { position: absolute; width: 14px; height: 14px; border-radius: 50%; background: var(--bulb); box-shadow: var(--bulb-glow); transform: translate(-50%, -50%); animation: flicker 6s infinite; }
+  @keyframes flicker { 0%, 92%, 100% { opacity: 1; } 94% { opacity: .55; } 96% { opacity: .95; } }
+
+  /* ---- 1: 開場 ---- */
+  .open { position: relative; z-index: 1; min-height: 100vh; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 48px; padding: 100px var(--container-x) 60px; }
+  .open .l { justify-self: end; text-align: right; }
+  .open .eyebrow { font-size: 13px; letter-spacing: .16em; color: var(--ink-on-dark-sub); font-weight: 700; }
+  .open h1 { font-weight: 900; font-size: clamp(44px, 6vw, 84px); line-height: 1.1; margin: 10px 0 0; letter-spacing: .04em; }
+  .open .r p { font-size: clamp(18px, 2vw, 24px); font-weight: 700; margin: 0; line-height: 1.9; }
+  .open .r small { display: block; margin-top: 18px; color: var(--ink-on-dark-sub); font-size: 13px; letter-spacing: .12em; }
+  .lip { display: inline-block; width: 36px; height: 3px; background: var(--color-red); border-radius: 3px; vertical-align: middle; margin-right: 10px; }
+
+  /* ---- 2: 鏡の前で変わる(スクロール) ---- */
+  .stage { position: relative; z-index: 1; height: 520vh; }
+  .stage .pin { position: sticky; top: 0; height: 100vh; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 56px; padding: 80px var(--container-x) 40px; }
+  .progress { justify-self: end; display: flex; flex-direction: column; gap: 14px; }
+  .progress i { width: 10px; height: 10px; border-radius: 50%; background: color-mix(in srgb, var(--color-bg) 22%, transparent); transition: background .4s, box-shadow .4s; }
+  .progress i.on { background: var(--bulb); box-shadow: var(--bulb-glow); }
+  /* 楽屋札: 楽屋の入口に貼る名札 */
+  .fuda { position: relative; min-height: 360px; }
+  .fuda article { position: absolute; top: 0; left: 0; width: min(300px, 32vw); opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+  .fuda article.on { opacity: 1; transform: none; }
+  .fuda .when { font-size: 12px; letter-spacing: .18em; color: var(--bulb); font-weight: 700; }
+  .fuda .tag { margin-top: 14px; background: var(--color-bg); color: var(--color-text); border-radius: 6px; padding: 22px 20px 20px; box-shadow: 0 16px 40px rgba(0,0,0,.4); position: relative; }
+  .fuda .tag::before { content: ""; position: absolute; top: -7px; left: 50%; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; background: var(--color-red); box-shadow: 0 2px 4px rgba(0,0,0,.35); }
+  .fuda .tag strong { display: block; font-size: 30px; font-weight: 900; line-height: 1.3; }
+  .fuda .tag span { display: block; font-size: 13px; color: var(--color-text-sub); margin-top: 8px; line-height: 1.7; }
+  .fuda p { margin: 18px 0 0; font-size: 15px; color: var(--ink-on-dark-sub); }
+
+  /* ---- 3: 出番表 ---- */
+  .board { position: relative; z-index: 1; padding: 120px var(--container-x) 80px; max-width: 1200px; margin: 0 auto; }
+  .board h2 { font-weight: 900; font-size: clamp(28px, 4vw, 44px); margin: 8px 0 12px; }
+  .board .eyebrow { font-size: 13px; letter-spacing: .16em; color: var(--bulb); font-weight: 700; }
+  .count { font-size: 15px; color: var(--ink-on-dark-sub); }
+  .count b { font-family: var(--font-en); font-size: 40px; color: var(--bulb); margin: 0 4px; }
+  .notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; margin-top: 44px; }
+  .note { background: var(--color-bg); color: var(--color-text); border-radius: 6px; padding: 30px 24px 26px; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,.4); transform: rotate(var(--t)); transition: transform .4s ease; }
+  .note:hover { transform: rotate(0) translateY(-4px); }
+  .note::before { content: ""; position: absolute; top: -7px; left: 50%; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; background: var(--color-red); box-shadow: 0 2px 4px rgba(0,0,0,.35); }
+  .note .d { font-family: var(--font-en); font-weight: 800; font-size: 30px; color: var(--color-red); line-height: 1.1; }
+  .note h3 { font-size: 18px; margin: 12px 0 8px; line-height: 1.5; font-weight: 900; }
+  .note p { margin: 0; font-size: 13px; color: var(--color-text-sub); }
+  .note .go { display: inline-block; margin-top: 16px; font-weight: 700; font-size: 14px; color: var(--color-red); }
+  .ft { position: relative; z-index: 1; text-align: center; padding: 40px 0 64px; font-size: 13px; color: var(--ink-on-dark-sub); }
+  .ft a { color: var(--bulb); font-weight: 700; }
+
+  @media (max-width: 900px) {
+    .open { grid-template-columns: 1fr; text-align: center; gap: 28px; padding-top: 88px; }
+    .open .l { justify-self: center; text-align: center; }
+    .stage .pin { grid-template-columns: 1fr; grid-template-rows: auto auto; gap: 18px; padding: 72px 20px 20px; justify-items: center; }
+    .progress { display: none; }
+    .stage .mirror { width: min(62vw, 300px); padding: 16px; }
+    .fuda { min-height: 190px; width: 100%; max-width: 360px; }
+    .fuda article { width: 100%; }
+    .fuda .tag { padding: 16px; }
+    .fuda .tag strong { font-size: 22px; }
+    .fuda p { display: none; }
+    .notes { grid-template-columns: 1fr; }
+    .nav { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+  </style>
+</head>
+<body>
+
+<header class="hd">
+  <a class="logo" href="index.html">Haginorina<i>.</i></a>
+  <nav class="nav"><a href="#stage">役</a><a href="#board">出番表</a><a href="../gallery.html">Gallery</a><a href="../contact.html">Contact</a></nav>
+</header>
+
+<main>
+  <section class="open">
+    <div class="l">
+      <div class="eyebrow">フリーの役者 / たまにモデル</div>
+      <h1>はぎの<br>りな</h1>
+    </div>
+    <div class="mirror" data-bulbs>
+      <div class="glass"><img class="on" src="img/mirror-selfie.jpg" alt="楽屋の鏡に映るはぎのりな" style="object-position:center 30%"></div>
+    </div>
+    <div class="r">
+      <p><span class="lip"></span>鏡の前で、<br>別のだれかになる。</p>
+      <small>SCROLL ↓</small>
+    </div>
+  </section>
+
+  <section class="stage" id="stage" aria-label="素顔から役へ">
+    <div class="pin">
+      <div class="progress" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+      <div class="mirror" data-bulbs>
+        <div class="glass">
+          <img class="on" src="img/mirror-selfie.jpg" alt="素顔のはぎのりな" style="object-position:center 30%">
+          <img src="img/role-midorikawa.jpg" alt="緑川夫人役のはぎのりな" style="object-position:center 18%">
+          <img src="img/role-kotone-stage.jpg" alt="琴音役のはぎのりな" style="object-position:center 30%">
+          <img src="../assets/images/x02.jpg" alt="コメット役のはぎのりな" style="object-position:center 20%">
+          <img src="../assets/images/x06.jpg" alt="終演後のはぎのりな" style="object-position:center 25%">
+        </div>
+      </div>
+      <div class="fuda">
+        <article class="on"><div class="when">開演前</div><div class="tag"><strong>はぎのりな</strong><span>まだ、素顔のまま</span></div><p>いつもの顔で、鏡の前に座る。</p></article>
+        <article><div class="when">2026.2 – 3</div><div class="tag"><strong>緑川夫人</strong><span>イルカ団!!「アルセーヌ・ルパン!!!!」<br>ウッディシアター中目黒</span></div><p>黄金仮面チームの緑川夫人。</p></article>
+        <article><div class="when">2026.5</div><div class="tag"><strong>琴音</strong><span>イルカ団!!「Q.T!!!!」<br>ウッディシアター中目黒</span></div><p>Bチームの琴音。</p></article>
+        <article><div class="when">2026.8 – 9</div><div class="tag"><strong>コメット</strong><span>「グノーシア ザ・ライブプレイングシアター」<br>飛行船シアター</span></div><p>ピンクの髪の、コメット役。</p></article>
+        <article><div class="when">終演後</div><div class="tag"><strong>はぎのりな</strong><span>また、素顔にもどる</span></div><p>そして、次の役へ。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="board" id="board">
+    <div class="eyebrow">CALL BOARD — 出番表</div>
+    <h2>次の出番</h2>
+    <p class="count">10月13日の開演まで、あと<b id="days">—</b>日</p>
+    <div class="notes">
+      <article class="note" style="--t:-2deg"><div class="d">10.13 – 14</div><h3>人狼TLPT 14周年記念<br>「Festival Stage」</h3><p>新宿村LIVE／全ステージに出演</p><a class="go" href="../news-single.html">公演情報 →</a></article>
+      <article class="note" style="--t:1.5deg"><div class="d">10.25</div><h3>劇団ちゃきんちゃきん<br>10周年記念公演</h3><p>昼の回（こども歓迎DAY）にゲスト出演</p><a class="go" href="../news.html">お知らせ →</a></article>
+      <article class="note" style="--t:-1deg"><div class="d">2027.02</div><h3>人狼TLPT #58<br>「ヴィレッヂ」</h3><p>シアター1010ミニシアター／演出を担当</p><a class="go" href="../news.html">お知らせ →</a></article>
+    </div>
+  </section>
+</main>
+
+<footer class="ft"><p>B 楽屋の鏡台（試作）　<a href="index.html">← 見比べページへ戻る</a></p></footer>
+
+<script>
+  // 鏡のまわりに電球を並べる(上・下・左右)
+  document.querySelectorAll('[data-bulbs]').forEach(function (m) {
+    var b = document.createElement('div'); b.className = 'bulbs';
+    var pts = [], nX = 5, nY = 6;
+    for (var i = 0; i < nX; i++) { var x = 12 + i * (76 / (nX - 1)); pts.push([x, 0], [x, 100]); }
+    for (var j = 1; j < nY - 1; j++) { var y = j * (100 / (nY - 1)); pts.push([0, y], [100, y]); }
+    pts.forEach(function (p, k) { var s = document.createElement('span'); s.style.left = p[0] + '%'; s.style.top = p[1] + '%'; s.style.animationDelay = (k * 0.37 % 6) + 's'; b.appendChild(s); });
+    m.appendChild(b);
+  });
+
+  // スクロールに合わせて、鏡の中を素顔→役→素顔へ
+  var stage = document.getElementById('stage');
+  var imgs = stage.querySelectorAll('.glass img');
+  var cards = stage.querySelectorAll('.fuda article');
+  var dots = stage.querySelectorAll('.progress i');
+  var cur = 0;
+  function onScroll() {
+    var r = stage.getBoundingClientRect();
+    var total = stage.offsetHeight - window.innerHeight;
+    var p = Math.min(Math.max(-r.top / total, 0), 0.999);
+    var i = Math.floor(p * imgs.length);
+    if (i === cur) return;
+    [imgs, cards, dots].forEach(function (list) { list[cur].classList.remove('on'); list[i].classList.add('on'); });
+    cur = i;
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // 開演までの日数
+  var d = Math.ceil((new Date('2026-10-13T18:00:00+09:00') - new Date()) / 86400000);
+  document.getElementById('days').textContent = d > 0 ? d : '0';
+</script>
+</body>
+</html>

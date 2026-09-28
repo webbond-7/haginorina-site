@@ -1,15 +1,9 @@
-<!doctype html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Contact &amp; SNS｜はぎのりな Official Fan Site</title>
-  <meta name="description" content="はぎのりな 公式ファンサイト。お問い合わせフォーム・SNSリンク・依頼内容について。" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Baloo+2:wght@500;600;700;800&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="assets/css/style.css" />
+<?php
+/**
+ * Contact & SNS(固定ページ contact)
+ */
+get_header();
+?>
   <style>
     .contact-form { display: grid; gap: 20px; }
     .field { display: grid; gap: 8px; }
@@ -51,52 +45,12 @@
     @media (max-width: 767px) {
       .request-list { grid-template-columns: 1fr; }
     }
+    .hn-trap { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; overflow: hidden; }
+    .contact-notice { margin: 0 0 20px; padding: 14px 18px; border-radius: 16px; font-weight: 700; line-height: 1.8; }
+    .contact-notice.is-ok { background: var(--color-yellow-soft); color: var(--color-text); }
+    .contact-notice.is-error { background: var(--color-red-soft); color: var(--color-red); }
   </style>
 
-  <script>
-  (function () {
-    try {
-      if (new URLSearchParams(location.search).has('loader')) {
-        sessionStorage.removeItem('h_loaded');
-        return;
-      }
-      if (sessionStorage.getItem('h_loaded')) document.documentElement.classList.add('no-loader');
-    } catch (e) {}
-  })();
-  </script>
-</head>
-<body data-screen-label="Contact">
-<!-- SITE LOADER -->
-<div class="site-loader" id="siteLoader" aria-hidden="true">
-  <div class="buddy-wrap">
-    <img class="buddy" src="assets/icons/loader-buddy.png" alt="" />
-    <div class="buddy-shadow"></div>
-  </div>
-  <div class="label" aria-label="Now Loading">
-    <span>N</span><span>o</span><span>w</span><span>&nbsp;</span><span>L</span><span>o</span><span>a</span><span>d</span><span>i</span><span>n</span><span>g</span><span>.</span><span>.</span><span>.</span>
-  </div>
-</div>
-
-
-<header class="site-header">
-  <a class="logo" href="index.html"><div>
-    <span class="logo-mark">Haginorina <img class="tulip" src="assets/icons/tulip.png" alt="" aria-hidden="true"></span>
-    <span class="logo-sub">Official Fan Site</span>
-  </div></a>
-  <nav class="main-nav">
-    <a class="nav-pill" href="works.html">活動紹介</a>
-    <a class="nav-pill" href="gallery.html">Photo / Gallery</a>
-    <a class="nav-pill" href="news.html">News / Info</a>
-    <a class="nav-pill is-active" href="contact.html" aria-current="page">Contact &amp; SNS</a>
-  </nav>
-  <button class="nav-toggle" aria-label="メニュー" aria-controls="mobileNav"><span></span></button>
-</header>
-<aside id="mobileNav" class="mobile-nav">
-  <a href="works.html">活動紹介 <span class="arrow">→</span></a>
-  <a href="gallery.html">Photo / Gallery <span class="arrow">→</span></a>
-  <a href="news.html">News / Info <span class="arrow">→</span></a>
-  <a href="contact.html">Contact &amp; SNS <span class="arrow">→</span></a>
-</aside>
 
 <section class="page-hero">
   <span class="deco deco-circle float-soft" aria-hidden="true" style="position:absolute;top:80px;right:-80px;width:240px;height:240px;background:var(--color-yellow-soft);"></span>
@@ -105,7 +59,7 @@
 
   <div class="page-hero-inner">
     <div class="page-hero-text">
-      <div class="breadcrumb"><a href="index.html">HOME</a> &nbsp;/&nbsp; CONTACT &amp; SNS</div>
+      <div class="breadcrumb"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">HOME</a> &nbsp;/&nbsp; CONTACT &amp; SNS</div>
       <h1>
         <span class="jp">CONTACT &amp; SNS — お問い合わせ</span>
         Get in touch.
@@ -113,7 +67,7 @@
       <p>お仕事のご依頼・取材・コラボなど、お気軽にご連絡ください。<br>SNSはDMでもお受けしています。</p>
     </div>
     <div class="page-hero-photo">
-      <img src="assets/images/g09.jpg" alt="はぎのりな ポートレート" style="object-position: 50% 24%;" />
+      <img src="<?php echo hn_asset( 'images/g09.jpg' ); ?>" alt="はぎのりな ポートレート" style="object-position: 50% 24%;" />
     </div>
   </div>
 </section>
@@ -139,32 +93,44 @@
 <section class="section section-bg-white" style="padding-top:40px;">
   <div class="section-inner">
     <div class="contact-grid">
-      <div class="contact-card reveal">
+      <div class="contact-card reveal" id="contact-form">
         <h3>お問い合わせフォーム</h3>
         <p>必要事項をご入力のうえ、送信してください。<br>内容を確認のうえ、3〜7日以内にご返信いたします。</p>
 
-        <form class="contact-form" onsubmit="event.preventDefault(); this.querySelector('.submit-row').innerHTML='<div style=\'color:var(--color-red);font-weight:700;\'>送信ありがとうございました。</div>';">
-          <div class="field">
-            <label>お名前 <span class="req">必須</span></label>
-            <input type="text" required placeholder="山田 太郎" />
+<?php
+$hn_notice = hn_contact_notice();
+if ( $hn_notice ) :
+	?>
+        <p class="contact-notice is-<?php echo esc_attr( $hn_notice[0] ); ?>" role="<?php echo 'ok' === $hn_notice[0] ? 'status' : 'alert'; ?>"><?php echo esc_html( $hn_notice[1] ); ?></p>
+<?php endif; ?>
+<?php if ( ! $hn_notice || 'ok' !== $hn_notice[0] ) : ?>
+        <form class="contact-form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+          <input type="hidden" name="action" value="hn_contact" />
+          <input type="hidden" name="hn_ts" value="<?php echo esc_attr( time() ); ?>" />
+          <?php wp_nonce_field( 'hn_contact', 'hn_contact_nonce' ); ?>
+          <div class="field hn-trap" aria-hidden="true">
+            <label for="hn_website">ウェブサイト(入力しないでください)</label>
+            <input type="text" id="hn_website" name="hn_website" tabindex="-1" autocomplete="off" />
           </div>
           <div class="field">
-            <label>メールアドレス <span class="req">必須</span></label>
-            <input type="email" required placeholder="you@example.com" />
+            <label for="hn_name">お名前 <span class="req">必須</span></label>
+            <input type="text" id="hn_name" name="hn_name" required maxlength="100" autocomplete="name" placeholder="山田 太郎" />
           </div>
           <div class="field">
-            <label>ご依頼内容</label>
-            <select>
-              <option>舞台・朗読 出演</option>
-              <option>映像・短編映画・MV 出演</option>
-              <option>モデル・撮影・ルックブック</option>
-              <option>イベント・トーク 出演</option>
-              <option>その他</option>
+            <label for="hn_email">メールアドレス <span class="req">必須</span></label>
+            <input type="email" id="hn_email" name="hn_email" required autocomplete="email" placeholder="you@example.com" />
+          </div>
+          <div class="field">
+            <label for="hn_kind">ご依頼内容</label>
+            <select id="hn_kind" name="hn_kind">
+<?php foreach ( hn_contact_kinds() as $k ) : ?>
+              <option><?php echo esc_html( $k ); ?></option>
+<?php endforeach; ?>
             </select>
           </div>
           <div class="field">
-            <label>メッセージ <span class="req">必須</span></label>
-            <textarea required placeholder="ご依頼の概要・スケジュール・媒体などをご記入ください。"></textarea>
+            <label for="hn_message">メッセージ <span class="req">必須</span></label>
+            <textarea id="hn_message" name="hn_message" required maxlength="5000" placeholder="ご依頼の概要・スケジュール・媒体などをご記入ください。"></textarea>
           </div>
           <div class="submit-row">
             <button type="submit" class="hero-cta" style="border:0;">
@@ -173,6 +139,7 @@
             </button>
           </div>
         </form>
+<?php endif; ?>
       </div>
 
       <div class="sns-block reveal">
@@ -198,30 +165,4 @@
   </div>
 </section>
 
-<footer class="site-footer">
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <span class="logo-mark">Haginorina <img class="tulip" src="assets/icons/tulip.png" alt="" style="width:24px;height:24px;transform:translateY(4px);"></span>
-      <span class="logo-sub">Official Fan Site</span>
-      <p>表現することが大好きな、フリーの役者 / たまにモデル。<br>境界を感じて、日常を変えていく。</p>
-    </div>
-    <div class="footer-col"><h4>SITE MAP</h4><ul>
-      <li><a href="works.html">活動紹介</a></li><li><a href="gallery.html">Photo / Gallery</a></li>
-      <li><a href="news.html">News / Info</a></li><li><a href="contact.html">Contact &amp; SNS</a></li>
-    </ul></div>
-    <div class="footer-col"><h4>WORKS</h4><ul>
-      <li><a href="works.html">舞台</a></li><li><a href="works.html">映像</a></li>
-      <li><a href="works.html">モデル</a></li>
-    </ul></div>
-    <div class="footer-col"><h4>FOLLOW</h4><ul>
-      <li><a href="https://x.com/rinasa__n" target="_blank" rel="noopener">X (Twitter)</a></li><li><a href="https://www.instagram.com/haginori02/" target="_blank" rel="noopener">Instagram</a></li><li><a href="#">YouTube</a></li>
-    </ul></div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2026 Haginorina. All Rights Reserved.</span>
-    <span>Feel the Boundary, Transform the Ordinary.</span>
-  </div>
-</footer>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+<?php get_footer(); ?>
